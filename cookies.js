@@ -1,6 +1,6 @@
 /*!
- * Cookies.js - 0.1.1
- * Tuesday, April 27 2012 @ 8:24 PM EST
+ * Cookies.js - 0.1.2
+ * Tuesday, April 27 2012 @ 10:53 PM EST
  *
  * Copyright (c) 2012, Scott Hamper
  * Licensed under the MIT license,
