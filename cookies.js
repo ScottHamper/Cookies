@@ -37,7 +37,7 @@
             case 'string': options.expires = new Date(options.expires); break;
         }
     
-        var cookieString = key + '=' + escape(JSON.stringify(value));
+        var cookieString = encodeURIComponent(key) + '=' + encodeURIComponent(JSON.stringify(value));
         cookieString += options.path ? ';path=' + options.path : '';
         cookieString += options.domain ? ';domain=' + options.domain : '';
         cookieString += options.expires ? ';expires=' + options.expires.toGMTString() : '';
@@ -64,15 +64,17 @@
         for (var i = 0; i < cookiesArray.length; i++) {
             var cookieKvp = typeof String.prototype.trim === 'function' ?
                 cookiesArray[i].trim().split('=') : cookiesArray[i].replace(/^\s+|\s+$/g, '').split('=');
+                
+            var key = decodeURIComponent(cookieKvp[0]);
+            var value = decodeURIComponent(cookieKvp[1]);
             
             // The first instance of a key in the document.cookie string
             // is the most locally scoped cookie with the specified key.
             // The value of this key will be sent to the web server, so we'll
             // just ignore any other instances of the key.
-            if (Cookies._cache[cookieKvp[0]] === undefined) {
-                var value = unescape(cookieKvp[1]);
+            if (Cookies._cache[key] === undefined) {
                 try { value = JSON.parse(value); } catch (ex) { }
-                Cookies._cache[cookieKvp[0]] = value;
+                Cookies._cache[key] = value;
             }
         }
     };
