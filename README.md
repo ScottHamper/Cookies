@@ -86,6 +86,9 @@ same way as 'max-age' (by setting `options.expires` to the number of seconds the
     Cookies.set('string', 'value', { expires: 600 }); // Expires in 10 minutes
     Cookies.set('string', 'value', { expires: '01-01-2012' });
     Cookies.set('string', 'value', { expires: new Date(2012, 0, 1) });
+    
+    // Using the alias
+    Cookies('array', [1, 2, 3], { secure: true });
 
 ### Cookies.get(key)
 *Alias: Cookies(key)*
@@ -137,6 +140,9 @@ for any property may be set in the `Cookies.defaults` object.
     
     // Expire the cookie and try to get its value
     Cookies.expire('string').get('string'); // undefined
+    
+    // Using the alias instead
+    Cookies('string', undefined);
     
 
 ## Properties
