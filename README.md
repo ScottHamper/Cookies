@@ -44,6 +44,7 @@ it is recomended not to use special characters in cookie keys.
 ## Methods
 
 ### Cookies.set(key, value [, options])
+*Alias: Cookies(key, value [, options])*
 Sets a cookie in the document. If the cookie does not already exist, it will be created.
 
 #### Arguments:
@@ -113,6 +114,7 @@ A JSON parsed representation of the cookie value, if it can be parsed, otherwise
     Cookies('string'); // "value"
     
 ### Cookies.expire(key [, options])
+*Alias: Cookies(key, `undefined` [, options])*
 Expires a cookie, removing it from the document.
 
 #### Arguments:

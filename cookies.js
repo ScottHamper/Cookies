@@ -1,6 +1,6 @@
 /*!
- * Cookies.js - 0.1.2
- * Tuesday, April 27 2012 @ 10:53 PM EST
+ * Cookies.js - 0.1.3
+ * Tuesday, April 28 2012 @ 12:11 PM EST
  *
  * Copyright (c) 2012, Scott Hamper
  * Licensed under the MIT license,
@@ -8,8 +8,15 @@
  */
 (function (document, undefined) {
 
-    var Cookies = function (key) {
-        return Cookies.get(key);
+    var Cookies = function () {
+        var args = Array.prototype.slice.call(arguments);
+        if (args.length === 1) {
+            return Cookies.get(args[0]);
+        } else if (args[1] === undefined) {
+            return Cookies.expire(args[0], args[2]);
+        } else {
+            return Cookies.set(args[0], args[1], args[2]);
+        }
     };
     
     Cookies.get = function (key) {

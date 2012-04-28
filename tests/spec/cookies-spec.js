@@ -29,6 +29,11 @@ describe('Cookies', function () {
             expect(document.cookie).toContain(cookieKey + '=');
         });
         
+        it('is aliased by "Cookies(key, value [, options])"', function () {
+            Cookies(cookieKey, 1);
+            expect(document.cookie).toContain(cookieKey + '=1');
+        });
+        
         it('JSON encodes numbers', function () {
             Cookies.set(cookieKey, 1);
             expect(document.cookie).toContain(cookieKey + '=' + escape(JSON.stringify(1)));
@@ -71,6 +76,12 @@ describe('Cookies', function () {
         });
         
         it('removes a cookie from "document.cookie"', function () {
+            expect(document.cookie).not.toContain(cookieKey + '=');
+        });
+        
+        it('is aliased by "Cookies(key, undefined)"', function () {
+            Cookies.set(cookieKey, 1);
+            Cookies(cookieKey, undefined);
             expect(document.cookie).not.toContain(cookieKey + '=');
         });
     });
