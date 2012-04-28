@@ -20,7 +20,9 @@
         return Cookies._cache[key];
     };
     
-    Cookies.defaults = {};
+    Cookies.defaults = {
+        path: '/'
+    };
     
     Cookies.set = function (key, value, options) {
         var options = {

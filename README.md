@@ -28,6 +28,16 @@ versions:
 It is recommended to use Douglas Crockford's [json2.js](https://github.com/douglascrockford/JSON-js) or Kit Cambridge's [json3.js](http://bestiejs.github.com/json3/)
 library for a `JSON` shim.
 
+## A Note About Encoding
+
+Cookies.js URI encodes cookie keys and values, and expects cookie keys to be URI encoded when accessing a cookie. In addition,
+before the cookie value is URI encoded, it is first JSON encoded via `JSON.stringify`. Keep this in mind when working with cookies on
+the server side.
+
+By URI encoding the cookie key, more types of characters can be used. However, it can be tricky to deal with this on the server side.
+For example, when using `encodeURIComponent`, escaped sequences are capitalized (e.g., `%3A`), but when using C#'s `HttpUtility.UrlEncode`
+function, escaped sequences are lower cased (e.g., `%3a`). These are treated as two separate cookie keys. Due to complications like this,
+it is recomended not to use special characters in cookie keys.
 
 # API Reference
 
@@ -139,13 +149,14 @@ A boolean value of whether or not the browser has cookies enabled.
 
 ### Cookies.defaults
 An object representing default options to be used when setting and expiring cookie values.
-By default, `Cookies.defaults` is an empty object, but supports the following properties:
+`Cookies.defaults` supports the following properties:
 
 *path*: A string value of the path of the cookie  
 *domain*: A string value of the domain of the cookie  
 *expires*: A number (of seconds), a date parsable string, or a `Date` object of when the cookie will expire  
 *secure*: A boolean value of whether or not the cookie should only be available over SSL
 
+By default, only `Cookies.defaults.path` is set to `'/'`, all other properties are `undefined`.
 If any property is left undefined, the browser's default value will be used instead.
 
 #### Example Usage:
