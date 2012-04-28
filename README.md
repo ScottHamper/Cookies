@@ -79,7 +79,7 @@ same way as 'max-age' (by setting `options.expires` to the number of seconds the
     Cookies.set('string', 'value').set('number', 123);
     
     // Setting cookies with additional options
-    Cookies.set('string', 'value', { path: '/', secure: true });
+    Cookies.set('string', 'value', { domain: 'www.example.com', secure: true });
     
     // Setting cookies with expiration values
     Cookies.set('string', 'value', { expires: 600 }); // Expires in 10 minutes
