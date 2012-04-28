@@ -2,7 +2,8 @@
 
 Cookies.js is a small client-side javascript library that makes managing cookies easy.
 In addition to its simple API, Cookies.js will automatically parse a JSON encoded string value
-back into its native data type when accessed.
+back into its native data type when accessed, and cache the result. For users of AMD
+loaders, Cookies.js will `define` itself, otherwise a global variable will be created.
 
 ## Browser Compatibility
 
@@ -26,10 +27,6 @@ versions:
 
 It is recommended to use Douglas Crockford's [json2.js](https://github.com/douglascrockford/JSON-js) or Kit Cambridge's [json3.js](http://bestiejs.github.com/json3/)
 library for a `JSON` shim.
-
-## To Do
-
-1. Improve documentation
 
 
 # API Reference
