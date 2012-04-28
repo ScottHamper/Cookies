@@ -1,22 +1,35 @@
 # Cookies.js
 
-Cookies.js is a small javascript library that makes managing cookies easy.
+Cookies.js is a small client-side javascript library that makes managing cookies easy.
 In addition to its simple API, Cookies.js will automatically parse a JSON encoded string value
 back into its native data type when accessed.
 
 ## Browser Compatibility
 
-Chrome, ???
+The following browsers have passed all of the Cookies.js unit tests:
+- Chrome
+- Firefox 3+
+- Safari 4+
+- Opera 10+
+- Internet Explorer 6+
 
-**Note**: For IE6 and 7 support, the 'JSON.parse' and 'JSON.stringify' functions must be [shimmed](http://en.wikipedia.org/wiki/Shim_\(computing\)).
-Douglas Crockford's [json2.js](https://github.com/douglascrockford/JSON-js), or Kit Cambridge's [json3.js](http://bestiejs.github.com/json3/)
-library is recommended.
+## Dependencies
+
+For modern browsers, Cookies.js has no dependencies. For older browsers, the `JSON.parse` and `JSON.stringify` functions
+must be [shimmed](http://en.wikipedia.org/wiki/Shim_\(computing\)). A shim is not required for the following major browser
+versions:
+- Chrome 3+
+- Firefox 3.1+
+- Safari 4+
+- Opera 10.5+
+- Internet Explorer 8+
+
+It is recommended to use Douglas Crockford's [json2.js](https://github.com/douglascrockford/JSON-js) or Kit Cambridge's [json3.js](http://bestiejs.github.com/json3/)
+library for a `JSON` shim.
 
 ## To Do
 
-1. Write more unit tests, and improve existing ones
-2. Run unit tests on a bunch of different browsers
-3. Improve documentation
+1. Improve documentation
 
 
 # API Reference
@@ -28,25 +41,25 @@ Sets a cookie in the document. If the cookie does not already exist, it will be 
 
 #### Arguments:
 *key*: A string value of the cookie key to set  
-*value*: Any type that can be encoded in a JSON string (via JSON.stringify())  
+*value*: Any type that can be encoded in a JSON string (via `JSON.stringify`)  
 *options*: An object containing additional parameters about the cookie (discussed below)
 
 #### Returns:
-The 'Cookies' object is returned to support chaining.
+The `Cookies` object is returned to support chaining.
 
 #### The 'options' Object:
 *path*: A string value of the path of the cookie  
 *domain*: A string value of the domain of the cookie  
-*expires*: A number (of seconds), a date parsable string, or a Date object of when the cookie will expire  
+*expires*: A number (of seconds), a date parsable string, or a `Date` object of when the cookie will expire  
 *secure*: A boolean value of whether or not the cookie should only be available over SSL
 
 If any property is left undefined, the browser's default value will be used instead. A default value
-for any property may be set in the 'Cookies.defaults' object.
+for any property may be set in the `Cookies.defaults` object.
 
 **Why use 'expires' instead of 'max-age' (or why not both)?**  
 Internet Explorer 6 - 8 do not support 'max-age', so Cookies.js always uses 'expires' internally.
-However, Cookies.js simplifies things by allowing the 'expires' property in the 'options' object to be used
-in the same way as 'max-age' (by setting 'expires' to the number of seconds the cookie should exist for).
+However, Cookies.js simplifies things by allowing the `options.expires` property to be used in the
+same way as 'max-age' (by setting `options.expires` to the number of seconds the cookie should exist for).
 
 #### Example usage:
     // Setting values of various data types
@@ -67,7 +80,7 @@ in the same way as 'max-age' (by setting 'expires' to the number of seconds the 
     Cookies.set('string', 'value', { expires: new Date(2012, 0, 1) });
 
 ### Cookies.get(key)
-*Alias: **Cookies(key)***
+*Alias: Cookies(key)*
 
 Retrieves the cookie value of the most locally scoped cookie with the specified key.
 If the cookie value is a JSON encoded string, the parsed JSON value will be returned.
@@ -100,14 +113,14 @@ Expires a cookie, removing it from the document.
 *options*: An object containing additional parameters about the cookie (discussed below)
 
 #### Returns:
-The 'Cookies' object is returned to support chaining.
+The `Cookies` object is returned to support chaining.
 
-#### The 'options' Object
+#### The 'options' Object:
 *path*: A string value of the path of the cookie  
 *domain*: A string value of the domain of the cookie
 
 If any property is left undefined, the browser's default value will be used instead. A default value
-for any property may be set in the 'Cookies.defaults' object.
+for any property may be set in the `Cookies.defaults` object.
 
 #### Example Usage:
     // First set a cookie and get its value
@@ -129,11 +142,11 @@ A boolean value of whether or not the browser has cookies enabled.
 
 ### Cookies.defaults
 An object representing default options to be used when setting and expiring cookie values.
-By default, 'Cookies.defaults' is an empty object, but supports the following properties:
+By default, `Cookies.defaults` is an empty object, but supports the following properties:
 
 *path*: A string value of the path of the cookie  
 *domain*: A string value of the domain of the cookie  
-*expires*: A number (of seconds), a date parsable string, or a Date object of when the cookie will expire  
+*expires*: A number (of seconds), a date parsable string, or a `Date` object of when the cookie will expire  
 *secure*: A boolean value of whether or not the cookie should only be available over SSL
 
 If any property is left undefined, the browser's default value will be used instead.
