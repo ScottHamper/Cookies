@@ -1,19 +1,19 @@
 /*!
- * Cookies.js - 0.1.0
- * Tuesday, April 27 2012 @ 12:08 AM EST
+ * Cookies.js - 0.1.1
+ * Tuesday, April 27 2012 @ 8:24 PM EST
  *
  * Copyright 2012, Scott Hamper
  * Licensed under the MIT license,
  * http://www.opensource.org/licenses/MIT
  */
-(function (window, undefined) {
+(function (document, undefined) {
 
     var Cookies = function (key) {
         return Cookies.get(key);
     };
     
     Cookies.get = function (key) {
-        if (window.document.cookie !== Cookies._cacheString) {
+        if (document.cookie !== Cookies._cacheString) {
             Cookies._populateCache();
         }
         
@@ -32,18 +32,18 @@
         
         switch (typeof options.expires) {
             // If a number is passed in, make it work like 'max-age'
-            case 'number': options.expires = new Date(Date.now() + options.expires * 1000); break;
+            case 'number': options.expires = new Date(new Date().getTime() + options.expires * 1000); break;
             // Allow multiple string formats for dates
             case 'string': options.expires = new Date(options.expires); break;
         }
     
-        var cookieString = key + '=' + escape(window.JSON.stringify(value));
+        var cookieString = key + '=' + escape(JSON.stringify(value));
         cookieString += options.path ? ';path=' + options.path : '';
         cookieString += options.domain ? ';domain=' + options.domain : '';
         cookieString += options.expires ? ';expires=' + options.expires.toGMTString() : '';
         cookieString += options.secure ? ';secure' : '';
         
-        window.document.cookie = cookieString;
+        document.cookie = cookieString;
         
         return Cookies;
     };
@@ -58,11 +58,12 @@
     
     Cookies._populateCache = function () {
         Cookies._cache = {};
-        Cookies._cacheString = window.document.cookie;
+        Cookies._cacheString = document.cookie;
         
         var cookiesArray = Cookies._cacheString.split(';');
         for (var i = 0; i < cookiesArray.length; i++) {
-            var cookieKvp = cookiesArray[i].trim().split('=');
+            var cookieKvp = typeof String.prototype.trim === 'function' ?
+                cookiesArray[i].trim().split('=') : cookiesArray[i].replace(/^\s+|\s+$/g, '').split('=');
             
             // The first instance of a key in the document.cookie string
             // is the most locally scoped cookie with the specified key.
@@ -70,7 +71,7 @@
             // just ignore any other instances of the key.
             if (Cookies._cache[cookieKvp[0]] === undefined) {
                 var value = unescape(cookieKvp[1]);
-                try { value = window.JSON.parse(value); } catch (ex) { }
+                try { value = JSON.parse(value); } catch (ex) { }
                 Cookies._cache[cookieKvp[0]] = value;
             }
         }
@@ -89,4 +90,4 @@
         window.Cookies = Cookies;
     }
     
-})(window);
+})(document);
