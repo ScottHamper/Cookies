@@ -17,7 +17,9 @@ describe('Cookies', function () {
         });
     });
     
+    Cookies.defaults.path = undefined;
     var cookieKey = 'cookies-spec.js';
+    
     describe('.set(key, value [, options])', function () {
         it('returns the "Cookies" object', function () {
             expect(Cookies.set(cookieKey)).toBe(Cookies);
@@ -76,6 +78,12 @@ describe('Cookies', function () {
     describe('.get(key)', function () {
         it('is aliased by calling "Cookies" as a function', function () {
             expect(Cookies.set(cookieKey, 1).get(cookieKey)).toEqual(Cookies(cookieKey));
+        });
+        
+        it('returns the most locally scoped cookie value for a specific key', function () {
+            Cookies.set(cookieKey, 2, { path: '/' });
+            expect(Cookies.get(cookieKey)).toEqual(1);
+            Cookies.expire(cookieKey, { path: '/' });
         });
         
         it('returns "undefined" for cookies that don\'t exist', function () {
