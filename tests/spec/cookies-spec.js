@@ -78,12 +78,6 @@ describe('Cookies', function () {
             expect(Cookies.set(cookieKey, 1).get(cookieKey)).toEqual(Cookies(cookieKey));
         });
         
-        it('returns the most locally scoped cookie value for a specific key', function () {
-            Cookies.set(cookieKey, 2, { path: '/' });
-            expect(Cookies.get(cookieKey)).toEqual(1);
-            Cookies.expire(cookieKey, { path: '/' });
-        });
-        
         it('returns "undefined" for cookies that don\'t exist', function () {
             Cookies.expire(cookieKey);
             expect(Cookies.get(cookieKey)).toBeUndefined();
