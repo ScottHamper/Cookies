@@ -67,6 +67,16 @@ describe('Cookies', function () {
                 expect(document.cookie).not.toContain(cookieKey + '=');
                 Cookies.set(cookieKey, 1, { secure: false });
             });
+            
+            it('overrides the "Cookies.default.secure" value when set in "options.secure"', function () {
+                Cookies.defaults.secure = true;
+                Cookies.set(cookieKey, 2, { secure: false });
+                expect(document.cookie).toContain(cookieKey + '=2');
+                
+                Cookies.defaults.secure = false;
+                Cookies.set(cookieKey, 2, { secure: true });
+                expect(document.cookie).not.toContain(cookieKey + '=2');
+            });
         }
     });
     

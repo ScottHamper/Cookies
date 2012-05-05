@@ -185,3 +185,23 @@ If any property is left undefined, the browser's default value will be used inst
     
     Cookies.set('key', 'value'); // Will be secure and have a path of '/'
     Cookies.expire('key'); // Will expire the cookie with a path of '/'
+    
+    
+# Change Log
+
+## 0.1.4
+- Fixed a bug where setting a cookie's `secure` value to`false` caused the `Cookies.defaults.secure` value to be used instead.
+
+## 0.1.3
+- Added aliases for `Cookies.set` and `Cookies.expire`.
+
+## 0.1.2
+- Set `Cookies.defaults.path` to `'/'`.
+- Replaced `escape` and `unescape` function calls with `encodeURIComponent` and `decodeURIComponent`, because the former are deprecated.
+- Cookie keys are now URI encoded in addition to cookie values.
+
+## 0.1.1
+- Cross browser fixes.
+
+## 0.1.0
+- Initial commit.
