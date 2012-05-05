@@ -5,6 +5,14 @@ In addition to its simple API, Cookies.js will automatically parse a JSON encode
 back into its native data type when accessed, and cache the result. For users of AMD
 loaders, Cookies.js will `define` itself, otherwise a global variable will be created.
 
+## Features
+
+- Automatically JSON encodes/decodes cookie values.
+- Caches cookie values, making sequential reads faster.
+- Supports AMD loaders.
+- Cross browser.
+- Lightweight (less than 1 KB, minified and gzipped).
+
 ## Browser Compatibility
 
 The following browsers have passed all of the Cookies.js unit tests:
