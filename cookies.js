@@ -1,6 +1,6 @@
 /*!
- * Cookies.js - 0.1.3
- * Saturday, April 28 2012 @ 12:11 PM EST
+ * Cookies.js - 0.1.4
+ * Saturday, May 05 2012 @ 4:40 PM EST
  *
  * Copyright (c) 2012, Scott Hamper
  * Licensed under the MIT license,
@@ -36,7 +36,7 @@
             path: options && options.path || Cookies.defaults.path,
             domain: options && options.domain || Cookies.defaults.domain,
             expires: options && options.expires || Cookies.defaults.expires,
-            secure: (options && typeof options.secure !== undefined) ? o.secure : Cookies.defaults.secure
+            secure: options && options.secure !== undefined ? options.secure : Cookies.defaults.secure
         };
         
         switch (typeof options.expires) {
