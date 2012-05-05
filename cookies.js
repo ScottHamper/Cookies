@@ -36,7 +36,7 @@
             path: options && options.path || Cookies.defaults.path,
             domain: options && options.domain || Cookies.defaults.domain,
             expires: options && options.expires || Cookies.defaults.expires,
-            secure: options && options.secure || Cookies.defaults.secure
+            secure: (options && typeof options.secure !== undefined) ? o.secure : Cookies.defaults.secure
         };
         
         switch (typeof options.expires) {
