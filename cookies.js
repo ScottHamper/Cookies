@@ -1,6 +1,6 @@
 /*!
  * Cookies.js - 0.1.5
- * Saturday, May 06 2012 @ 5:53 PM EST
+ * Saturday, May 06 2012 @ 5:57 PM EST
  *
  * Copyright (c) 2012, Scott Hamper
  * Licensed under the MIT license,
@@ -12,8 +12,6 @@
         var args = Array.prototype.slice.call(arguments);
         if (args.length === 1) {
             return Cookies.get(args[0]);
-        } else if (args[1] === undefined) {
-            return Cookies.expire(args[0], args[2]);
         } else {
             return Cookies.set(args[0], args[1], args[2]);
         }
@@ -39,6 +37,12 @@
             secure: options && options.secure !== undefined ? options.secure : Cookies.defaults.secure
         };
         
+        // Expire the cookie if value is `undefined`
+        if (value === undefined) {
+            options.expires = -1;
+            value = '';
+        }
+        
         switch (typeof options.expires) {
             // If a number is passed in, make it work like 'max-age'
             case 'number': options.expires = new Date(new Date().getTime() + options.expires * 1000); break;
@@ -58,18 +62,14 @@
     };
     
     Cookies.expire = function (key, options) {
-        return Cookies.set(key, '', {
-            path: options && options.path,
-            domain: options && options.domain,
-            expires: -1
-        });
+        return Cookies.set(key, undefined, options);
     };
     
     Cookies._populateCache = function () {
         Cookies._cache = {};
         Cookies._cacheString = document.cookie;
         
-        var cookiesArray = Cookies._cacheString.split(';');
+        var cookiesArray = Cookies._cacheString.split('; ');
         for (var i = 0; i < cookiesArray.length; i++) {
             var cookieKvp = cookiesArray[i].split('=');
             var key = decodeURIComponent(cookieKvp[0]);
