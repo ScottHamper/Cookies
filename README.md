@@ -3,13 +3,15 @@
 Cookies.js is a small client-side javascript library that makes managing cookies easy.
 In addition to its simple API, Cookies.js will automatically parse a JSON encoded string value
 back into its native data type when accessed, and cache the result. For users of AMD
-loaders, Cookies.js will `define` itself, otherwise a global variable will be created.
+loaders, Cookies.js will `define` itself. For users of CommonJS, Cookies.js will export itself.
+Otherwise a global variable will be created.
 
 ## Features
 
 - Automatically JSON encodes/decodes cookie values.
 - Caches cookie values, making sequential reads faster.
 - Supports AMD loaders.
+- Support CommonJS (including npm, browserify etc).
 - Cross browser.
 - Lightweight (less than 1 KB, minified and gzipped).
 
@@ -188,6 +190,9 @@ If any property is left undefined, the browser's default value will be used inst
     
     
 # Change Log
+
+## 0.1.5
+- CommonJS-support.
 
 ## 0.1.4
 - Fixed a bug where setting a cookie's `secure` value to`false` caused the `Cookies.defaults.secure` value to be used instead.
