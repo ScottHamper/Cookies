@@ -10,8 +10,7 @@ Otherwise a global variable will be created.
 
 - Automatically JSON encodes/decodes cookie values.
 - Caches cookie values, making sequential reads faster.
-- Supports AMD loaders.
-- Support CommonJS (including npm, browserify etc).
+- Supports AMD / CommonJS loaders.
 - Cross browser.
 - Lightweight (less than 1 KB, minified and gzipped).
 
@@ -192,7 +191,9 @@ If any property is left undefined, the browser's default value will be used inst
 # Change Log
 
 ## 0.1.5
-- CommonJS-support.
+- Added CommonJS module support.
+- Setting an `undefined` value with `Cookies.set` now expires the cookie, mirroring the `Cookies.expire` alias syntax.
+- Simplified how the `document.cookie` string is parsed.
 
 ## 0.1.4
 - Fixed a bug where setting a cookie's `secure` value to`false` caused the `Cookies.defaults.secure` value to be used instead.
