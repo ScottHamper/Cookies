@@ -97,6 +97,8 @@
     // AMD support
     if (typeof define === 'function' && define.amd) {
         define(function () { return Cookies; });
+    } else if (typeof module && module.exports) {
+        exports = module.exports = Cookies;
     } else {
         window.Cookies = Cookies;
     }
