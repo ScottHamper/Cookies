@@ -1,0 +1,10 @@
+{
+  "name"          : "client-cookies",
+  "description"   : "Client-Side Cookie Manipulation API",
+  "homepage"      : "http://github.com/ScottHamper/Cookies",
+  "keywords"      : ["cookies", "client", "browser"],
+  "author"        : "Scott Hamper",
+  "repository"    : {"type": "git", "url": "git://github.com/ScottHamper/Cookies.git"},
+  "main"          : "cookies.js",
+  "version"       : "0.1.5"
+}
