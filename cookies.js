@@ -71,9 +71,7 @@
         
         var cookiesArray = Cookies._cacheString.split(';');
         for (var i = 0; i < cookiesArray.length; i++) {
-            var cookieKvp = typeof String.prototype.trim === 'function' ?
-                cookiesArray[i].trim().split('=') : cookiesArray[i].replace(/^\s+|\s+$/g, '').split('=');
-                
+            var cookieKvp = cookiesArray[i].split('=');
             var key = decodeURIComponent(cookieKvp[0]);
             var value = decodeURIComponent(cookieKvp[1]);
             
