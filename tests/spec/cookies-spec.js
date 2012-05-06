@@ -22,7 +22,7 @@ describe('Cookies', function () {
     
     describe('.set(key, value [, options])', function () {
         it('returns the "Cookies" object', function () {
-            expect(Cookies.set(cookieKey)).toBe(Cookies);
+            expect(Cookies.set(cookieKey, 1)).toBe(Cookies);
         });
         
         it('sets a cookie in "document.cookie"', function () {
@@ -30,34 +30,36 @@ describe('Cookies', function () {
         });
         
         it('is aliased by "Cookies(key, value [, options])"', function () {
-            Cookies(cookieKey, 1);
-            expect(document.cookie).toContain(cookieKey + '=1');
+            Cookies(cookieKey, 2);
+            expect(document.cookie).toContain(cookieKey + '=2');
         });
         
         it('JSON encodes numbers', function () {
             Cookies.set(cookieKey, 1);
-            expect(document.cookie).toContain(cookieKey + '=' + escape(JSON.stringify(1)));
+            expect(document.cookie).toContain(cookieKey + '=1');
         });
         
         it('JSON encodes strings', function () {
             Cookies.set(cookieKey, '1');
-            expect(document.cookie).toContain(cookieKey + '=' + escape(JSON.stringify('1')));
+            expect(document.cookie).toContain(cookieKey + '=' + encodeURIComponent(JSON.stringify('1')));
         });
         
         it('JSON encodes arrays', function () {
-            Cookies.set(cookieKey, [1, 2, 3]);
-            expect(document.cookie).toContain(cookieKey + '=' + escape(JSON.stringify([1, 2, 3])));
+            var value = [1, 2, 3];
+            Cookies.set(cookieKey, value);
+            expect(document.cookie).toContain(cookieKey + '=' + encodeURIComponent(JSON.stringify(value)));
         });
         
         it('JSON encodes objects', function () {
-            Cookies.set(cookieKey, { key: 'value' });
-            expect(document.cookie).toContain(cookieKey + '=' + escape(JSON.stringify({ key: 'value' })));
+            var value = { key: 'value' };
+            Cookies.set(cookieKey, value);
+            expect(document.cookie).toContain(cookieKey + '=' + encodeURIComponent(JSON.stringify(value)));
         });
         
         it('JSON encodes dates', function () {
-            var date = new Date();
-            Cookies.set(cookieKey, date);
-            expect(document.cookie).toContain(cookieKey + '=' + escape(JSON.stringify(date)));
+            var value = new Date();
+            Cookies.set(cookieKey, value);
+            expect(document.cookie).toContain(cookieKey + '=' + encodeURIComponent(JSON.stringify(value)));
         });
         
         // No way to know if a cookie is actually secure unless HTTP is used.
