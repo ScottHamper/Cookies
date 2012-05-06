@@ -1,6 +1,6 @@
 /*!
- * Cookies.js - 0.1.4
- * Saturday, May 05 2012 @ 4:40 PM EST
+ * Cookies.js - 0.1.5
+ * Saturday, May 06 2012 @ 5:53 PM EST
  *
  * Copyright (c) 2012, Scott Hamper
  * Licensed under the MIT license,
@@ -97,8 +97,12 @@
     // AMD support
     if (typeof define === 'function' && define.amd) {
         define(function () { return Cookies; });
-    } else if (typeof module && module.exports) {
-        exports = module.exports = Cookies;
+    // CommonJS support with backwards compatibility for the old `require` API.
+    } else if (typeof exports !== 'undefined') {
+        if (typeof module != 'undefined' && module.exports) {
+            exports = module.exports = Cookies;
+        }
+        exports.Cookies = Cookies;
     } else {
         window.Cookies = Cookies;
     }
