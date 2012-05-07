@@ -190,6 +190,10 @@ If any property is left undefined, the browser's default value will be used inst
     
 # Change Log
 
+## 0.1.6
+- Added `'using strict';` directive.
+- Removed some extraneous code.
+
 ## 0.1.5
 - Added CommonJS module support.
 - Setting an `undefined` value with `Cookies.set` now expires the cookie, mirroring the `Cookies.expire` alias syntax.
