@@ -1,19 +1,19 @@
 /*!
- * Cookies.js - 0.1.5
- * Saturday, May 06 2012 @ 5:57 PM EST
+ * Cookies.js - 0.1.6
+ * Saturday, May 06 2012 @ 9:56 PM EST
  *
  * Copyright (c) 2012, Scott Hamper
  * Licensed under the MIT license,
  * http://www.opensource.org/licenses/MIT
  */
 (function (document, undefined) {
-
+    'use strict';
+    
     var Cookies = function () {
-        var args = Array.prototype.slice.call(arguments);
-        if (args.length === 1) {
-            return Cookies.get(args[0]);
+        if (arguments.length === 1) {
+            return Cookies.get(arguments[0]);
         } else {
-            return Cookies.set(args[0], args[1], args[2]);
+            return Cookies.set(arguments[0], arguments[1], arguments[2]);
         }
     };
     
@@ -37,11 +37,7 @@
             secure: options && options.secure !== undefined ? options.secure : Cookies.defaults.secure
         };
         
-        // Expire the cookie if value is `undefined`
-        if (value === undefined) {
-            options.expires = -1;
-            value = '';
-        }
+        if (value === undefined) { options.expires = -1; }
         
         switch (typeof options.expires) {
             // If a number is passed in, make it work like 'max-age'
