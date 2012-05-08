@@ -43,10 +43,13 @@ Cookies.js URI encodes cookie keys and values, and expects cookie keys to be URI
 before the cookie value is URI encoded, it is first JSON encoded via `JSON.stringify`. Keep this in mind when working with cookies on
 the server side.
 
-By URI encoding the cookie key, more types of characters can be used. However, it can be tricky to deal with this on the server side.
-For example, when using `encodeURIComponent`, escaped sequences are capitalized (e.g., `%3A`), but when using C#'s `HttpUtility.UrlEncode`
-function, escaped sequences are lower cased (e.g., `%3a`). These are treated as two separate cookie keys. Due to complications like this,
-it is recomended not to use special characters in cookie keys.
+### .NET Users
+Do not use [HttpUtility.UrlEncode](http://msdn.microsoft.com/en-us/library/4fkewx0t.aspx) and
+[HttpUtility.UrlDecode](http://msdn.microsoft.com/en-us/library/adwtk1fy.aspx) on cookie keys or values. `HttpUtility.UrlEncode` will
+improperly escape space characters to `'+'` and lower case every escape sequence. `HttpUtility.UrlDecode` will improperly unescape
+every `'+'` to a space character. Instead, use
+[System.Uri.EscapeDataString](http://msdn.microsoft.com/en-us/library/system.uri.escapedatastring.aspx) and
+[System.Uri.UnescapeDataString](http://msdn.microsoft.com/en-us/library/system.uri.unescapedatastring.aspx).
 
 # API Reference
 
