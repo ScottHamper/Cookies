@@ -190,6 +190,9 @@ If any property is left undefined, the browser's default value will be used inst
     
 # Change Log
 
+## 0.1.7
+- Changed cookie value encoding to only encode the special characters defined in [RFC6265](http://www.rfc-editor.org/rfc/rfc6265.txt)
+
 ## 0.1.6
 - Added `'use strict';` directive.
 - Removed some extraneous code.

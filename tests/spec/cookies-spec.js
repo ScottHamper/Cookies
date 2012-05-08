@@ -1,4 +1,4 @@
-describe('Cookies', function () {
+﻿describe('Cookies', function () {
     beforeEach(function () {
         this.addMatchers({
             toBeBoolean: function () {
@@ -41,25 +41,39 @@ describe('Cookies', function () {
         
         it('JSON encodes strings', function () {
             Cookies.set(cookieKey, '1');
-            expect(document.cookie).toContain(cookieKey + '=' + encodeURIComponent(JSON.stringify('1')));
+            expect(document.cookie).toContain(cookieKey + '=' + JSON.stringify('1').replace(/[^!#-+\--:<-[\]-~]/g, encodeURIComponent));
         });
         
         it('JSON encodes arrays', function () {
             var value = [1, 2, 3];
             Cookies.set(cookieKey, value);
-            expect(document.cookie).toContain(cookieKey + '=' + encodeURIComponent(JSON.stringify(value)));
+            expect(document.cookie).toContain(cookieKey + '=' + JSON.stringify(value).replace(/[^!#-+\--:<-[\]-~]/g, encodeURIComponent));
         });
         
         it('JSON encodes objects', function () {
             var value = { key: 'value' };
             Cookies.set(cookieKey, value);
-            expect(document.cookie).toContain(cookieKey + '=' + encodeURIComponent(JSON.stringify(value)));
+            expect(document.cookie).toContain(cookieKey + '=' + JSON.stringify(value).replace(/[^!#-+\--:<-[\]-~]/g, encodeURIComponent));
         });
         
         it('JSON encodes dates', function () {
             var value = new Date();
             Cookies.set(cookieKey, value);
-            expect(document.cookie).toContain(cookieKey + '=' + encodeURIComponent(JSON.stringify(value)));
+            expect(document.cookie).toContain(cookieKey + '=' + JSON.stringify(value).replace(/[^!#-+\--:<-[\]-~]/g, encodeURIComponent));
+        });
+        
+        it('URI encodes the cookie key', function () {
+            var specialKey = 'key;with,special\tcharacters';
+            Cookies.set(specialKey, 1);
+            expect(document.cookie).toContain(encodeURIComponent(specialKey) + '=1');
+            Cookies.expire(specialKey);
+        });
+        
+        it('URI encodes special characters in the cookie value as defined by RFC6265', function () {
+            var value = '|piñata=papier-mâché, and\t\\"candy";|';
+            Cookies.set(cookieKey, value);
+            // Value is actually JSON encoded, then URI encoded
+            expect(document.cookie).toContain(cookieKey + '=%22|pi%C3%B1ata=papier-m%C3%A2ch%C3%A9%2C%20and%5Ct%5C%5C%5C%22candy%5C%22%3B|%22');
         });
         
         // No way to know if a cookie is actually secure unless HTTP is used.

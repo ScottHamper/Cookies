@@ -1,6 +1,6 @@
 /*!
- * Cookies.js - 0.1.6
- * Saturday, May 06 2012 @ 9:56 PM EST
+ * Cookies.js - 0.1.7
+ * Saturday, May 08 2012 @ 5:08 PM EST
  *
  * Copyright (c) 2012, Scott Hamper
  * Licensed under the MIT license,
@@ -37,7 +37,10 @@
             secure: options && options.secure !== undefined ? options.secure : Cookies.defaults.secure
         };
         
-        if (value === undefined) { options.expires = -1; }
+        if (value === undefined) {
+            options.expires = -1;
+            value = '';
+        }
         
         switch (typeof options.expires) {
             // If a number is passed in, make it work like 'max-age'
@@ -46,7 +49,8 @@
             case 'string': options.expires = new Date(options.expires); break;
         }
     
-        var cookieString = encodeURIComponent(key) + '=' + encodeURIComponent(JSON.stringify(value));
+        // Escape only the characters that should be escaped as defined by RFC6265
+        var cookieString = encodeURIComponent(key) + '=' + JSON.stringify(value).replace(/[^!#-+\--:<-[\]-~]/g, encodeURIComponent);
         cookieString += options.path ? ';path=' + options.path : '';
         cookieString += options.domain ? ';domain=' + options.domain : '';
         cookieString += options.expires ? ';expires=' + options.expires.toGMTString() : '';
@@ -67,9 +71,10 @@
         
         var cookiesArray = Cookies._cacheString.split('; ');
         for (var i = 0; i < cookiesArray.length; i++) {
-            var cookieKvp = cookiesArray[i].split('=');
-            var key = decodeURIComponent(cookieKvp[0]);
-            var value = decodeURIComponent(cookieKvp[1]);
+            // The cookie value can contain a '=', so cannot use 'split'
+            var separatorIndex = cookiesArray[i].indexOf('=');
+            var key = decodeURIComponent(cookiesArray[i].substr(0, separatorIndex));
+            var value = decodeURIComponent(cookiesArray[i].substr(separatorIndex + 1));
             
             // The first instance of a key in the document.cookie string
             // is the most locally scoped cookie with the specified key.
@@ -91,11 +96,13 @@
     // AMD support
     if (typeof define === 'function' && define.amd) {
         define(function () { return Cookies; });
-    // CommonJS support with backwards compatibility for the old `require` API.
+    // CommonJS and Node.js module support.
     } else if (typeof exports !== 'undefined') {
+        // Support Node.js specific `module.exports` (which can be a function)
         if (typeof module != 'undefined' && module.exports) {
             exports = module.exports = Cookies;
         }
+        // But always support CommonJS module 1.1.1 spec (`exports` cannot be a function)
         exports.Cookies = Cookies;
     } else {
         window.Cookies = Cookies;
