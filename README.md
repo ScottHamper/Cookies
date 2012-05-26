@@ -40,7 +40,7 @@ Sets a cookie in the document. If the cookie does not already exist, it will be 
 
 #### Arguments:
 *key*: A string value of the cookie key to set  
-*value*: A string value of the cookie value to set
+*value*: A string value of the cookie value to set  
 *options*: An object containing additional parameters about the cookie (discussed below)
 
 #### Returns:
