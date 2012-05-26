@@ -1,6 +1,6 @@
 /*!
  * Cookies.js - 0.2.0
- * Tuesday, May 26 2012 @ 10:11 AM EST
+ * Tuesday, May 26 2012 @ 10:56 AM EST
  *
  * Copyright (c) 2012, Scott Hamper
  * Licensed under the MIT license,
@@ -87,7 +87,7 @@
     };
     
     Cookies.enabled = (function () {
-        var isEnabled = Cookies.set('cookies.js', 1).get('cookies.js') === 1;
+        var isEnabled = Cookies.set('cookies.js', '1').get('cookies.js') === '1';
         Cookies.expire('cookies.js');
         return isEnabled;
     })();
