@@ -1,21 +1,14 @@
 # Cookies.js
 
 Cookies.js is a small client-side javascript library that makes managing cookies easy.
-In addition to its simple API, Cookies.js will automatically parse a JSON encoded string value
-back into its native data type when accessed, and cache the result. For users of AMD
-loaders, Cookies.js will `define` itself. For users of CommonJS, Cookies.js will export itself.
-Otherwise a global variable will be created.
 
 ## Features
-
-- Automatically JSON encodes/decodes cookie values.
 - Caches cookie values, making sequential reads faster.
 - Supports AMD / CommonJS loaders.
 - Cross browser.
 - Lightweight (less than 1 KB, minified and gzipped).
 
 ## Browser Compatibility
-
 The following browsers have passed all of the Cookies.js unit tests:
 - Chrome
 - Firefox 3+
@@ -23,25 +16,9 @@ The following browsers have passed all of the Cookies.js unit tests:
 - Opera 10+
 - Internet Explorer 6+
 
-## Dependencies
-
-For modern browsers, Cookies.js has no dependencies. For older browsers, the `JSON.parse` and `JSON.stringify` functions
-must be [shimmed](http://en.wikipedia.org/wiki/Shim_\(computing\)). A shim is not required for the following major browser
-versions:
-- Chrome 3+
-- Firefox 3.1+
-- Safari 4+
-- Opera 10.5+
-- Internet Explorer 8+
-
-It is recommended to use Douglas Crockford's [json2.js](https://github.com/douglascrockford/JSON-js) or Kit Cambridge's [json3.js](http://bestiejs.github.com/json3/)
-library for a `JSON` shim.
-
 ## A Note About Encoding
-
-Cookies.js URI encodes cookie keys and values, and expects cookie keys to be URI encoded when accessing a cookie. In addition,
-before the cookie value is URI encoded, it is first JSON encoded via `JSON.stringify`. Keep this in mind when working with cookies on
-the server side.
+Cookies.js URI encodes cookie keys and values, and expects cookie keys to be URI encoded when accessing a cookie.
+Keep this in mind when working with cookies on the server side.
 
 ### .NET Users
 Do not use [HttpUtility.UrlEncode](http://msdn.microsoft.com/en-us/library/4fkewx0t.aspx) and
@@ -50,6 +27,7 @@ improperly escape space characters to `'+'` and lower case every escape sequence
 every `'+'` to a space character. Instead, use
 [System.Uri.EscapeDataString](http://msdn.microsoft.com/en-us/library/system.uri.escapedatastring.aspx) and
 [System.Uri.UnescapeDataString](http://msdn.microsoft.com/en-us/library/system.uri.unescapedatastring.aspx).
+
 
 # API Reference
 
@@ -62,7 +40,7 @@ Sets a cookie in the document. If the cookie does not already exist, it will be 
 
 #### Arguments:
 *key*: A string value of the cookie key to set  
-*value*: Any type that can be encoded in a JSON string (via `JSON.stringify`)  
+*value*: A string value of the cookie value to set
 *options*: An object containing additional parameters about the cookie (discussed below)
 
 #### Returns:
@@ -83,51 +61,43 @@ However, Cookies.js simplifies things by allowing the `options.expires` property
 same way as 'max-age' (by setting `options.expires` to the number of seconds the cookie should exist for).
 
 #### Example usage:
-    // Setting values of various data types
-    Cookies.set('string', 'value');
-    Cookies.set('number', 123);
-    Cookies.set('array', [1, 2, 3]);
-    Cookies.set('object', { hello: 'world' });
+    // Setting a cookie value
+    Cookies.set('key', 'value');
     
     // Chaining sets together
-    Cookies.set('string', 'value').set('number', 123);
+    Cookies.set('key', 'value').set('hello', 'world');
     
     // Setting cookies with additional options
-    Cookies.set('string', 'value', { domain: 'www.example.com', secure: true });
+    Cookies.set('key', 'value', { domain: 'www.example.com', secure: true });
     
     // Setting cookies with expiration values
-    Cookies.set('string', 'value', { expires: 600 }); // Expires in 10 minutes
-    Cookies.set('string', 'value', { expires: '01-01-2012' });
-    Cookies.set('string', 'value', { expires: new Date(2012, 0, 1) });
+    Cookies.set('key', 'value', { expires: 600 }); // Expires in 10 minutes
+    Cookies.set('key', 'value', { expires: '01-01-2012' });
+    Cookies.set('key', 'value', { expires: new Date(2012, 0, 1) });
     
     // Using the alias
-    Cookies('array', [1, 2, 3], { secure: true });
+    Cookies('key', 'value', { secure: true });
 
 ### Cookies.get(key)
 *Alias: Cookies(key)*
 
 Retrieves the cookie value of the most locally scoped cookie with the specified key.
-If the cookie value is a JSON encoded string, the parsed JSON value will be returned.
 
 #### Arguments:
 *key*: A string value of a cookie key
 
 #### Returns:
-A JSON parsed representation of the cookie value, if it can be parsed, otherwise the string value of the cookie.
+The string value of the cookie.
 
 #### Example Usage:
-    // First set some cookies
-    Cookies.set('string', 'value');
-    Cookies.set('number', 123);
-    Cookies.set('object', { hello: 'world' });
+    // First set a cookie
+    Cookies.set('key', 'value');
     
-    // Get the cookie values (as its original data type)
-    Cookies.get('string'); // "value"
-    Cookies.get('number'); // 123
-    Cookies.get('object'); // { hello: 'world' }
+    // Get the cookie value
+    Cookies.get('key'); // "value"
     
     // Using the alias
-    Cookies('string'); // "value"
+    Cookies('key'); // "value"
     
 ### Cookies.expire(key [, options])
 *Alias: Cookies(key, `undefined` [, options])*
@@ -145,18 +115,18 @@ The `Cookies` object is returned to support chaining.
 *path*: A string value of the path of the cookie  
 *domain*: A string value of the domain of the cookie
 
-If any property is left undefined, the browser's default value will be used instead. A default value
+If any property is left `undefined`, the browser's default value will be used instead. A default value
 for any property may be set in the `Cookies.defaults` object.
 
 #### Example Usage:
     // First set a cookie and get its value
-    Cookies.set('string', 'value').get('string'); // "value"
+    Cookies.set('key', 'value').get('key'); // "value"
     
     // Expire the cookie and try to get its value
-    Cookies.expire('string').get('string'); // undefined
+    Cookies.expire('key').get('key'); // undefined
     
     // Using the alias instead
-    Cookies('string', undefined);
+    Cookies('key', undefined);
     
 
 ## Properties
@@ -192,6 +162,10 @@ If any property is left undefined, the browser's default value will be used inst
     
     
 # Change Log
+
+## 0.2.0
+- Cookie values are no longer automatically JSON encoded/decoded. This featured was deemed out of the scope of the library.
+This change also removes the dependency on a JSON shim for older browsers.
 
 ## 0.1.7
 - Changed cookie value encoding to only encode the special characters defined in [RFC6265](http://www.rfc-editor.org/rfc/rfc6265.txt)

@@ -1,6 +1,6 @@
 /*!
- * Cookies.js - 0.1.7
- * Tuesday, May 08 2012 @ 6:29 PM EST
+ * Cookies.js - 0.2.0
+ * Tuesday, May 26 2012 @ 10:11 AM EST
  *
  * Copyright (c) 2012, Scott Hamper
  * Licensed under the MIT license,
@@ -50,7 +50,7 @@
         }
     
         // Escape only the characters that should be escaped as defined by RFC6265
-        var cookieString = encodeURIComponent(key) + '=' + JSON.stringify(value).replace(/[^!#-+\--:<-[\]-~]/g, encodeURIComponent);
+        var cookieString = encodeURIComponent(key) + '=' + (value + '').replace(/[^!#-+\--:<-[\]-~]/g, encodeURIComponent);
         cookieString += options.path ? ';path=' + options.path : '';
         cookieString += options.domain ? ';domain=' + options.domain : '';
         cookieString += options.expires ? ';expires=' + options.expires.toGMTString() : '';
@@ -81,7 +81,6 @@
             // The value of this key will be sent to the web server, so we'll
             // just ignore any other instances of the key.
             if (Cookies._cache[key] === undefined) {
-                try { value = JSON.parse(value); } catch (ex) { }
                 Cookies._cache[key] = value;
             }
         }
