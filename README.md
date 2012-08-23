@@ -1,3 +1,4 @@
+[![build status](https://secure.travis-ci.org/ScottHamper/Cookies.png)](http://travis-ci.org/ScottHamper/Cookies)
 # Cookies.js
 
 Cookies.js is a small client-side javascript library that makes managing cookies easy.
