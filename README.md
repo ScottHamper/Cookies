@@ -163,6 +163,9 @@ If any property is left undefined, the browser's default value will be used inst
     
 # Change Log
 
+## 0.2.1
+- Properly escaped a `[` literal in the RFC6265 regular expression.
+
 ## 0.2.0
 - Cookie values are no longer automatically JSON encoded/decoded. This featured was deemed out of the scope of the library.
 This change also removes the dependency on a JSON shim for older browsers.

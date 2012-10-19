@@ -1,6 +1,6 @@
 /*!
- * Cookies.js - 0.2.0
- * Friday, June 15 2012 @ 7:38 PM EST
+ * Cookies.js - 0.2.1
+ * Thursday, October 18 2012 @ 8:18 PM EST
  *
  * Copyright (c) 2012, Scott Hamper
  * Licensed under the MIT license,
@@ -46,7 +46,7 @@
         }
     
         // Escape only the characters that should be escaped as defined by RFC6265
-        var cookieString = encodeURIComponent(key) + '=' + (value + '').replace(/[^!#-+\--:<-[\]-~]/g, encodeURIComponent);
+        var cookieString = encodeURIComponent(key) + '=' + (value + '').replace(/[^!#-+\--:<-\[\]-~]/g, encodeURIComponent);
         cookieString += options.path ? ';path=' + options.path : '';
         cookieString += options.domain ? ';domain=' + options.domain : '';
         cookieString += options.expires ? ';expires=' + options.expires.toGMTString() : '';
