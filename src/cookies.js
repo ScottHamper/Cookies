@@ -64,7 +64,7 @@
     Cookies._populateCache = function () {
         Cookies._cache = {};
         Cookies._cacheString = document.cookie;
-        
+		
         var cookiesArray = Cookies._cacheString.split('; ');
         for (var i = 0; i < cookiesArray.length; i++) {
             // The cookie value can contain a '=', so cannot use 'split'
