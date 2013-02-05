@@ -6,5 +6,5 @@
   "author"        : "Scott Hamper",
   "repository"    : {"type": "git", "url": "git://github.com/ScottHamper/Cookies.git"},
   "main"          : "cookies.js",
-  "version"       : "0.1.5"
+  "version"       : "0.2.1"
 }
