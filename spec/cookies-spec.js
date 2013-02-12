@@ -356,14 +356,14 @@
                 expect(Cookies._generateCookieString(key, value)).toEqual('%5C%22%2C%3B%20%C3%B1%C3%A2%C3%A9=value');
             });
             
-            it('URI encodes special characters in the `value`, as defined by RFC6265', function () {
-                value = '\\",; ñâé';
-                expect(Cookies._generateCookieString(key, value)).toEqual('key=%5C%22%2C%3B%20%C3%B1%C3%A2%C3%A9');
+            it('URI encodes special characters in the `value`, as defined by RFC6265, as well as the "%" character', function () {
+                value = '\\",; ñâé%';
+                expect(Cookies._generateCookieString(key, value)).toEqual('key=%5C%22%2C%3B%20%C3%B1%C3%A2%C3%A9%25');
             });
             
-            it('does not URI encode special characters in the `value` which are not defined as special by RFC6265', function () {
-                value = '#$%&+/:<=>?@[]^`{|}~';
-                expect(Cookies._generateCookieString(key, value)).toEqual('key=#$%&+/:<=>?@[]^`{|}~');
+            it('does not URI encode special characters in the `value` which are not defined as special by RFC6265, except the "%" character', function () {
+                value = '#$&+/:<=>?@[]^`{|}~';
+                expect(Cookies._generateCookieString(key, value)).toEqual('key=#$&+/:<=>?@[]^`{|}~');
             });
             
             it('includes the path when `options.path` is defined', function () {
