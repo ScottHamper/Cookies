@@ -7,6 +7,7 @@ Cookies.js is a small client-side javascript library that makes managing cookies
 - Supports AMD / CommonJS loaders.
 - Cross browser.
 - Lightweight (less than 1 KB, minified and gzipped).
+- [RFC6265](http://www.rfc-editor.org/rfc/rfc6265.txt) Compliant.
 
 ## Browser Compatibility
 The following browsers have passed all of the Cookies.js unit tests:
@@ -162,6 +163,10 @@ If any property is left undefined, the browser's default value will be used inst
     
     
 # Change Log
+
+## 0.3.0
+- Rewrote the library from the ground up, using test driven development. The public API remains unchanged.
+- Restructured project directories.
 
 ## 0.2.1
 - Properly escaped a `[` literal in the RFC6265 regular expression.

@@ -1,107 +1,559 @@
-﻿describe('Cookies', function () {
+﻿describe('UNIT TESTS', function () {
+    var mockDocument;
+
     beforeEach(function () {
-        this.addMatchers({
-            toBeBoolean: function () {
-                return this.actual === true || this.actual === false;
-            }
+        mockDocument = {};
+        Cookies._document = mockDocument;
+        Cookies._cachedDocumentCookie = '';
+    });
+
+    describe('Cookies(key)', function () {
+        it('returns `Cookies.get(key)`', function () {
+            var key = 'key';
+            var value = 'value';
+            
+            spyOn(Cookies, 'get').andReturn(value);
+            
+            expect(Cookies(key)).toEqual(value);
+            expect(Cookies.get).toHaveBeenCalledWith(key);
         });
     });
-    
-    it('exists in the "window" object', function () {
-        expect(Cookies).toBeDefined();
+
+    describe('Cookies(key, value[, options])', function () {
+        var key = 'key';
+        var value = 'value';
+        var options = undefined;
+        
+        it('calls `Cookies.set(key, value, options)`', function () {
+            spyOn(Cookies, 'set');
+            Cookies(key, value, options);
+            
+            expect(Cookies.set).toHaveBeenCalledWith(key, value, options);
+        });
+        
+        it('returns `Cookies`', function () {
+            expect(Cookies(key, value, options)).toEqual(Cookies);
+        });
     });
-    
-    describe('.enabled', function () {
-        it('returns whether or not the browser has cookies enabled', function () {
-            expect(Cookies.enabled).toBeBoolean();
+
+    describe('Cookies.defaults', function () {
+        it('has a defined `path` value of "/"', function () {
+            expect(Cookies.defaults.path).toEqual('/');
+        });
+        
+        it('has an undefined `domain` value', function () {
+            expect(Cookies.defaults.domain).toBeUndefined();
+        });
+        
+        it('has an undefined `expires` value', function () {
+            expect(Cookies.defaults.expires).toBeUndefined();
+        });
+        
+        it('has an undefined `secure` value', function () {
+            expect(Cookies.defaults.secure).toBeUndefined();
         });
     });
-    
-    Cookies.defaults.path = undefined;
-    var cookieKey = 'cookies-spec.js';
-    
-    describe('.set(key, value [, options])', function () {
-        it('returns the "Cookies" object', function () {
-            expect(Cookies.set(cookieKey, 'value')).toBe(Cookies);
+
+    describe('Cookies.get(key)', function () {
+        var key;
+        
+        beforeEach(function () {
+            key = 'key';
+            mockDocument.cookie = 'key=value';
         });
         
-        it('sets a cookie in "document.cookie"', function () {
-            expect(document.cookie).toContain(cookieKey + '=value');
+        it('returns `undefined` when `key` is undefined', function () {
+            key = undefined;
+            expect(Cookies.get(key)).toBeUndefined();
         });
         
-        it('is aliased by "Cookies(key, value [, options])"', function () {
-            Cookies(cookieKey, 'monster');
-            expect(document.cookie).toContain(cookieKey + '=monster');
+        it('returns `undefined` for a cookie key that does not exist', function () {
+            key = 'undefined';
+            expect(Cookies.get(key)).toBeUndefined();
         });
         
-        it('URI encodes the cookie key', function () {
-            var specialKey = 'key;with,special\tcharacters';
-            Cookies.set(specialKey, 'value');
-            expect(document.cookie).toContain(encodeURIComponent(specialKey) + '=value');
-            Cookies.expire(specialKey);
+        it('calls `Cookies._renewCache()` when `document.cookie` does not equal `Cookies._cachedDocumentCookie`', function () {
+            Cookies._cachedDocumentCookie = undefined;
+            
+            spyOn(Cookies, '_renewCache');
+            Cookies.get(key);
+            
+            expect(Cookies._renewCache).toHaveBeenCalled();
         });
         
-        it('URI encodes special characters in the cookie value as defined by RFC6265', function () {
-            Cookies.set(cookieKey, '|piñata=papier-mâché, and\t\\"candy";|');
-            expect(document.cookie).toContain(cookieKey + '=|pi%C3%B1ata=papier-m%C3%A2ch%C3%A9%2C%20and%09%5C%22candy%22%3B|');
+        it('does not call `Cookies._renewCache()` when `document.cookie` equals `Cookies._cachedDocumentCookie`', function () {
+            Cookies._cachedDocumentCookie = mockDocument.cookie;
+            
+            spyOn(Cookies, '_renewCache');
+            Cookies.get('key');
+            
+            expect(Cookies._renewCache).not.toHaveBeenCalled();
         });
         
-        // No way to know if a cookie is actually secure unless HTTP is used.
-        if (window.location.protocol === 'http:') {
-            it('sets secure cookies when "options.secure" is true', function () {
-                Cookies.set(cookieKey, 'value', { secure: true });
-                expect(document.cookie).not.toContain(cookieKey + '=');
+        it('returns the value of `Cookies._cache[key]`', function () {
+            Cookies._cachedDocumentCookie = mockDocument.cookie; // Prevents cache from renewing
+            Cookies._cache = { key: 'value' };
+            
+            expect(Cookies.get(key)).toEqual(Cookies._cache[key]);
+        });
+    });
+
+    describe('Cookies.set(key, value[, options])', function () {
+        var key, value, options;
+        var originalDefaults = Cookies.defaults;
+        
+        beforeEach(function () {
+            key = 'key';
+            value = 'value';
+            options = undefined;
+            
+            Cookies.defaults = {
+                path: '/cookies',
+                domain: 'www.scotthamper.com',
+                expires: '01-01-2013 GMT',
+                secure: false
+            };
+        });
+        
+        afterEach(function () {
+            Cookies.defaults = originalDefaults;
+        });
+        
+        it('returns the `Cookies` object', function () {
+            expect(Cookies.set(key, value, options)).toEqual(Cookies);
+        });
+        
+        it('calls `Cookies._getExtendedOptions(options)`', function () {
+            options = { path: '/' };
+            
+            spyOn(Cookies, '_getExtendedOptions').andCallThrough();
+            Cookies.set(key, value, options);
+            
+            expect(Cookies._getExtendedOptions).toHaveBeenCalledWith(options);
+        });
+        
+        it('calls `Cookies._getExpiresDate(options.expires)`', function () {
+            options = { expires: '01-01-2013' };
+            
+            spyOn(Cookies, '_getExpiresDate').andCallThrough();
+            Cookies.set(key, value, options);
+            
+            expect(Cookies._getExpiresDate).toHaveBeenCalledWith(options.expires);
+        });
+        
+        it('calls `Cookies._getExpiresDate(-1)` when value is `undefined`', function () {
+            options = { expires: '01-01-2013' };
+            
+            spyOn(Cookies, '_getExpiresDate').andCallThrough();
+            Cookies.set(key, undefined, options);
+            
+            expect(Cookies._getExpiresDate).toHaveBeenCalledWith(-1);
+        });
+        
+        it('calls `Cookies._generateCookieString(key, value, options)` with extended options and options.expires as a Date instance', function () {
+            var extendedOptionsWithExpiresDate = {
+                path: Cookies.defaults.path,
+                domain: Cookies.defaults.domain,
+                expires: new Date(Cookies.defaults.expires),
+                secure: Cookies.defaults.secure
+            };
+            
+            spyOn(Cookies, '_generateCookieString').andCallThrough();
+            Cookies.set(key, value, options);
+            
+            expect(Cookies._generateCookieString).toHaveBeenCalledWith(key, value, extendedOptionsWithExpiresDate);
+        });
+        
+        it('sets `document.cookie` to the proper cookie string', function () {
+            var expectedCookieString = 'key=value;path=/cookies;domain=www.scotthamper.com;expires=Tue, 01 Jan 2013 00:00:00 GMT';
+            Cookies.set(key, value, options);
+            
+            expect(mockDocument.cookie).toEqual(expectedCookieString);
+        });
+    });
+
+    describe('Cookies.expire(key, options)', function () {
+        var key = 'key';
+
+        it('calls `Cookies.set(key, undefined, options)`', function () {
+            var options = undefined;
+            
+            spyOn(Cookies, 'set');
+            Cookies.expire(key, options);
+            
+            expect(Cookies.set).toHaveBeenCalledWith(key, undefined, options);
+        });
+        
+        it('returns `Cookies`', function () {
+            expect(Cookies.expire(key)).toEqual(Cookies);
+        });
+    });
+
+    describe('"PRIVATE" FUNCTIONS', function () {
+        describe('Cookies._getExtendedOptions(options)', function () {
+            var originalDefaults = Cookies.defaults;
+            
+            beforeEach(function () {
+                Cookies.defaults = {
+                    path: '/cookies',
+                    domain: 'www.scotthamper.com',
+                    expires: '01-01-2013',
+                    secure: false
+                };
             });
             
-            it('overrides the "Cookies.default.secure" value when set in "options.secure"', function () {
-                Cookies.defaults.secure = true;
-                Cookies.set(cookieKey, 'value', { secure: false });
-                expect(document.cookie).toContain(cookieKey + '=value');
-                
-                Cookies.defaults.secure = false;
-                Cookies.set(cookieKey, 'value', { secure: true });
-                expect(document.cookie).not.toContain(cookieKey + '=value');
+            afterEach(function () {
+                Cookies.defaults = originalDefaults;
             });
-        }
+
+            it('returns `Cookies.defaults` when `options` is undefined', function () {
+                expect(Cookies._getExtendedOptions(undefined)).toEqual(Cookies.defaults);
+            });
+            
+            it('returns `options` when all properties are defined on `options`', function () {
+                var options = {
+                    path: '/nom',
+                    domain: 'www.github.com',
+                    expires: '02-02-2013',
+                    secure: true
+                };
+                
+                expect(Cookies._getExtendedOptions(options)).toEqual(options);
+            });
+            
+            it('returns `Cookies.defaults` with an overridden `path` property when only `options.path` is specified', function () {
+                var options = { path: '/nom' };
+                
+                expect(Cookies._getExtendedOptions(options)).toEqual({
+                    path: options.path,
+                    domain: Cookies.defaults.domain,
+                    expires: Cookies.defaults.expires,
+                    secure: Cookies.defaults.secure
+                });
+            });
+            
+            it('returns `Cookies.defaults` with an overridden `domain` property when only `options.domain` is specified', function () {
+                var options = { domain: 'www.github.com' };
+                
+                expect(Cookies._getExtendedOptions(options)).toEqual({
+                    path: Cookies.defaults.path,
+                    domain: options.domain,
+                    expires: Cookies.defaults.expires,
+                    secure: Cookies.defaults.secure
+                });
+            });
+            
+            it('returns `Cookies.defaults` with an overridden `expires` property when only `options.expires` is specified', function () {
+                var options = { expires: '02-02-2013' };
+                
+                expect(Cookies._getExtendedOptions(options)).toEqual({
+                    path: Cookies.defaults.path,
+                    domain: Cookies.defaults.domain,
+                    expires: options.expires,
+                    secure: Cookies.defaults.secure
+                });
+            });
+            
+            it('returns `Cookies.defaults` with an overridden `secure` property when only `options.secure` is specified', function () {
+                var options = { secure: true };
+                
+                expect(Cookies._getExtendedOptions(options)).toEqual({
+                    path: Cookies.defaults.path,
+                    domain: Cookies.defaults.domain,
+                    expires: Cookies.defaults.expires,
+                    secure: options.secure
+                });
+            });
+            
+            it('returns an object with `secure` set to `false`, when `options.secure` is `false` and `Cookies.defaults.secure` is `true`', function () {
+                var options = { secure: false };
+                Cookies.defaults.secure = true;
+                expect(Cookies._getExtendedOptions(options).secure).toBe(false);
+            });
+            
+            it('does not modify `options`', function () {
+                var options = {};
+                Cookies._getExtendedOptions(options);
+                
+                expect(options.path).toBeUndefined();
+                expect(options.domain).toBeUndefined();
+                expect(options.expires).toBeUndefined();
+                expect(options.secure).toBeUndefined();
+            });
+        });
+        
+        describe('Cookies._isValidDate(date)', function () {
+            it('returns `false` when `date` is not a Date instance', function () {
+                expect(Cookies._isValidDate('cookies')).toBe(false);
+                expect(Cookies._isValidDate(1)).toBe(false);
+                expect(Cookies._isValidDate(['array'])).toBe(false);
+                expect(Cookies._isValidDate({ key: 'value' })).toBe(false);
+                expect(Cookies._isValidDate(/regex/)).toBe(false);
+            });
+            
+            it('returns `false` when `date` is an invalid Date instance', function () {
+                var date = new Date('cookies');
+                expect(Cookies._isValidDate(date)).toBe(false);
+            });
+            
+            it('returns `true` when `date` is a valid Date instance', function () {
+                var date = new Date();
+                expect(Cookies._isValidDate(date)).toBe(true);
+            });
+        });
+        
+        describe('Cookies._getExpiresDate(expires)', function () {
+            it('returns a Date object set to the current time plus <expires> seconds, when `expires` is a number', function () {
+                var now = new Date('01-01-2013 00:00:00');
+                var expires = 5;
+                expect(Cookies._getExpiresDate(expires, now)).toEqual(new Date('01-01-2013 00:00:05'));
+            });
+            
+            it('returns a Date object when `expires` is a valid Date parsable string', function () {
+                var expires = '01-01-2013';
+                expect(Cookies._getExpiresDate(expires)).toEqual(new Date('01-01-2013'));
+            });
+            
+            it('returns `expires` when `expires` is a Date object', function () {
+                var expires = new Date();
+                expect(Cookies._getExpiresDate(expires)).toEqual(expires);
+            });
+            
+            it('returns `undefined` when `expires` is undefined', function () {
+                expect(Cookies._getExpiresDate(undefined)).toBeUndefined();
+            });
+            
+            it('throws Error when `expires` is not a number, string, or Date', function () {
+                var expires = {};
+                expect(function () { Cookies._getExpiresDate(expires); }).toThrow();
+            });
+            
+            it('throws Error when `expires` is a non-date string', function () {
+                var expires = 'cookies';
+                expect(function () { Cookies._getExpiresDate(expires); }).toThrow();
+            });
+        });
+        
+        describe('Cookies._generateCookieString(key, value[, options])', function () {
+            var key, value;
+            
+            beforeEach(function () {
+                key = 'key';
+                value = 'value';
+            });
+            
+            it('separates the `key` and `value` with an "=" character', function () {
+                expect(Cookies._generateCookieString(key, value)).toEqual('key=value');
+            });
+            
+            it('converts a number `value` to a string', function () {
+                value = 0;
+                expect(Cookies._generateCookieString(key, value)).toEqual('key=0');
+            });
+            
+            it('URI encodes the `key`', function () {
+                key = '\\",; ñâé';
+                expect(Cookies._generateCookieString(key, value)).toEqual('%5C%22%2C%3B%20%C3%B1%C3%A2%C3%A9=value');
+            });
+            
+            it('URI encodes special characters in the `value`, as defined by RFC6265', function () {
+                value = '\\",; ñâé';
+                expect(Cookies._generateCookieString(key, value)).toEqual('key=%5C%22%2C%3B%20%C3%B1%C3%A2%C3%A9');
+            });
+            
+            it('does not URI encode special characters in the `value` which are not defined as special by RFC6265', function () {
+                value = '#$%&+/:<=>?@[]^`{|}~';
+                expect(Cookies._generateCookieString(key, value)).toEqual('key=#$%&+/:<=>?@[]^`{|}~');
+            });
+            
+            it('includes the path when `options.path` is defined', function () {
+                var options = { path: '/' };
+                expect(Cookies._generateCookieString(key, value, options)).toEqual('key=value;path=/');
+            });
+            
+            it('includes the domain when `options.domain` is defined', function () {
+                var options = { domain: 'www.scotthamper.com' };
+                expect(Cookies._generateCookieString(key, value, options)).toEqual('key=value;domain=www.scotthamper.com');
+            });
+            
+            it('includes the expiration date when `options.expires` is defined', function () {
+                var options = { expires: new Date('01-01-2013 GMT') };
+                var expected = 'key=value;expires=Tue, 01 Jan 2013 00:00:00 GMT';
+                
+                expect(Cookies._generateCookieString(key, value, options)).toEqual(expected);
+            });
+            
+            it('includes the secure flag when `options.secure` is true', function () {
+                var options = { secure: true };
+                expect(Cookies._generateCookieString(key, value, options)).toEqual('key=value;secure');
+            });
+        });
+        
+        describe('Cookies._getCookieObjectFromString(documentCookie)', function () {
+            it('returns an object of cookie key/value pairs', function () {
+                var documentCookie = 'key=value; scott=hamper';
+                expect(Cookies._getCookieObjectFromString(documentCookie)).toEqual({
+                    key: 'value',
+                    scott: 'hamper'
+                });
+            });
+            
+            it('returns an empty object if `documentCookie` is an empty string', function () {
+                var documentCookie = '';
+                expect(Cookies._getCookieObjectFromString(documentCookie)).toEqual({});
+            });
+            
+            it('ignores duplicate cookie keys', function () {
+                var documentCookie = 'key=value; key=scott';
+                expect(Cookies._getCookieObjectFromString(documentCookie)).toEqual({
+                    key: 'value'
+                });
+            });
+            
+            it('URI decodes cookie keys', function () {
+                var documentCookie = '%5C%22%2C%3B%20%C3%B1%C3%A2%C3%A9=value';
+                expect(Cookies._getCookieObjectFromString(documentCookie)).toEqual({
+                    '\\",; ñâé': 'value'
+                });
+            });
+            
+            it('URI decodes cookie values', function () {
+                var documentCookie = 'key=%5C%22%2C%3B%20%C3%B1%C3%A2%C3%A9';
+                expect(Cookies._getCookieObjectFromString(documentCookie)).toEqual({
+                    key: '\\",; ñâé'
+                });
+            });
+            
+            it('parses cookie values containing an "=" character', function () {
+                var documentCookie = 'key=value=value';
+                expect(Cookies._getCookieObjectFromString(documentCookie)).toEqual({
+                    key: 'value=value'
+                });
+            });
+        });
+
+        describe('Cookies._renewCache()', function () {
+            it('sets `Cookies._cache` to `Cookies._getCookieObjectFromString(document.cookie)`', function () {
+                mockDocument.cookie = 'key=value';
+                Cookies._cache = undefined;
+                
+                spyOn(Cookies, '_getCookieObjectFromString').andCallThrough();
+                Cookies._renewCache();
+                
+                expect(Cookies._getCookieObjectFromString).toHaveBeenCalledWith(mockDocument.cookie);
+                expect(Cookies._cache).toEqual(Cookies._getCookieObjectFromString(mockDocument.cookie));
+            });
+            
+            it('sets `Cookies._cachedDocumentCookie` to `document.cookie`', function () {
+                mockDocument.cookie = 'key=value';
+                Cookies._renewCache();
+                expect(Cookies._cachedDocumentCookie).toEqual(mockDocument.cookie);
+            });
+        });
+        
+        describe('Cookies._areEnabled()', function () {
+            var mockNavigator;
+            
+            beforeEach(function () {
+                mockNavigator = {};
+                Cookies._navigator = mockNavigator;
+            });
+            
+            it('returns true if `navigator.cookieEnabled` is true', function () {
+                mockNavigator.cookieEnabled = true;
+                expect(Cookies._areEnabled()).toBe(true);
+            });
+            
+            it('attempts to set and get a cookie with a key of `cookies.js` when `navigator.cookieEnabled` is not true', function () {
+                var key = 'cookies.js';
+                var value = 1;
+                var documentCookie = 'cookies.js=1';
+                
+                spyOn(Cookies, 'set').andCallThrough();
+                spyOn(Cookies, 'get').andCallThrough();
+                Cookies._areEnabled();
+                
+                expect(Cookies.set).toHaveBeenCalledWith(key, value);
+                expect(Cookies.get).toHaveBeenCalledWith(key);
+            });
+            
+            it('does not attempt to set or get a cookie when `navigator.cookieEnabled` is true', function () {
+                mockNavigator.cookieEnabled = true;
+                
+                spyOn(Cookies, 'set');
+                spyOn(Cookies, 'get');
+                Cookies._areEnabled();
+                
+                expect(Cookies.set).not.toHaveBeenCalled();
+                expect(Cookies.get).not.toHaveBeenCalled();
+            });
+            
+            it('returns `true` if `navigator.cookieEnabled` is not true, but a cookie can be set and retrieved successfully', function () {
+                spyOn(Cookies, 'set').andCallFake(function () {
+                    mockDocument.cookie = 'cookies.js=1';
+                    return Cookies;
+                });
+                
+                expect(Cookies._areEnabled()).toBe(true);
+            });
+            
+            it('returns `false` if `navigator.cookieEnabled` is not true, and a cookie cannot be set and retrieved successfully', function () {
+                mockDocument.cookie = '';
+                expect(Cookies._areEnabled()).toBe(false);
+            });
+        });
+    });
+});
+
+describe('INTEGRATION TESTS', function () {
+    var key = 'key';
+    var value = 'value';
+    
+    beforeEach(function () {
+        Cookies._document = window.document;
+        Cookies._navigator = window.navigator;
     });
     
-    describe('.expire(key [, options])', function () {
-        it('returns the "Cookies" object', function () {
-            expect(Cookies.expire(cookieKey)).toBe(Cookies);
+    
+    describe('Cookies.enabled', function () {
+        it('equals `Cookies._areEnabled()`', function () {
+            expect(Cookies.enabled).toEqual(Cookies._areEnabled());
         });
         
-        it('removes a cookie from "document.cookie"', function () {
-            expect(document.cookie).not.toContain(cookieKey + '=');
-        });
-        
-        it('is aliased by "Cookies(key, undefined)"', function () {
-            Cookies.set(cookieKey, 'value');
-            Cookies(cookieKey, undefined);
-            expect(document.cookie).not.toContain(cookieKey + '=');
+        // Cookies have to be enabled in order to do any integration tests
+        it('is true', function () {
+            expect(Cookies.enabled).toBe(true);
         });
     });
     
-    describe('.get(key)', function () {
-        it('is aliased by calling "Cookies" as a function', function () {
-            Cookies.set(cookieKey, 'value')
-            expect(Cookies.get(cookieKey)).toEqual(Cookies(cookieKey));
+    describe('Cookies.set(key, value[, options])', function () {
+        afterEach(function () {
+            document.cookie = 'key=value;path=/;expires=' + new Date('01-01-2000').toGMTString();
         });
         
-        it('returns the most locally scoped cookie value for a specific key', function () {
-            Cookies.set(cookieKey, 'value');
-            Cookies.set(cookieKey, 'monster', { path: '/' });
-            expect(Cookies.get(cookieKey)).toEqual('value');
-            Cookies.expire(cookieKey, { path: '/' });
+        it('sets a cookie', function () {
+            Cookies.set(key, value);
+            expect(document.cookie).toContain('key=value');
         });
         
-        it('returns "undefined" for cookies that don\'t exist', function () {
-            Cookies.expire(cookieKey);
-            expect(Cookies.get(cookieKey)).toBeUndefined();
+        it('expires a cookie when `value` is `undefined`', function () {
+            Cookies.set(key, value);
+            Cookies.set(key, undefined);
+            expect(document.cookie).not.toContain('key=');
+        });
+    });
+    
+    describe('Cookies.get(key)', function () {
+        beforeEach(function () {
+            Cookies.set(key, value);
         });
         
-        it('caches cookie values', function () {
-            Cookies.set(cookieKey, 'value').get(cookieKey);
-            expect(Cookies._cache[cookieKey]).toEqual('value');
+        afterEach(function () {
+            Cookies.expire(key);
+        });
+        
+        it('returns the value of a cookie', function () {
+            expect(Cookies.get(key)).toEqual(value);
         });
     });
 });
