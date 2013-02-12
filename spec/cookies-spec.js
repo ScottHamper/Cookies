@@ -165,7 +165,8 @@
         });
         
         it('sets `document.cookie` to the proper cookie string', function () {
-            var expectedCookieString = 'key=value;path=/cookies;domain=www.scotthamper.com;expires=Tue, 01 Jan 2013 00:00:00 GMT';
+            var expires = new Date(Cookies.defaults.expires).toGMTString(); // IE appends "UTC" instead of "GMT", so I can't hard-code the value
+            var expectedCookieString = 'key=value;path=/cookies;domain=www.scotthamper.com;expires=' + expires;
             Cookies.set(key, value, options);
             
             expect(mockDocument.cookie).toEqual(expectedCookieString);
@@ -378,7 +379,7 @@
             
             it('includes the expiration date when `options.expires` is defined', function () {
                 var options = { expires: new Date('01/01/2013 00:00:00 GMT') };
-                var expected = 'key=value;expires=Tue, 01 Jan 2013 00:00:00 GMT';
+                var expected = 'key=value;expires=' + options.expires.toGMTString(); // IE appends "UTC" instead of "GMT", so I can't hard-code the value
                 
                 expect(Cookies._generateCookieString(key, value, options)).toEqual(expected);
             });
