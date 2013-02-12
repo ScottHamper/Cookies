@@ -110,7 +110,7 @@
             Cookies.defaults = {
                 path: '/cookies',
                 domain: 'www.scotthamper.com',
-                expires: '01-01-2013 GMT',
+                expires: '01/01/2013 GMT',
                 secure: false
             };
         });
@@ -133,7 +133,7 @@
         });
         
         it('calls `Cookies._getExpiresDate(options.expires)`', function () {
-            options = { expires: '01-01-2013' };
+            options = { expires: '01/01/2013' };
             
             spyOn(Cookies, '_getExpiresDate').andCallThrough();
             Cookies.set(key, value, options);
@@ -142,7 +142,7 @@
         });
         
         it('calls `Cookies._getExpiresDate(-1)` when value is `undefined`', function () {
-            options = { expires: '01-01-2013' };
+            options = { expires: '01/01/2013' };
             
             spyOn(Cookies, '_getExpiresDate').andCallThrough();
             Cookies.set(key, undefined, options);
@@ -197,7 +197,7 @@
                 Cookies.defaults = {
                     path: '/cookies',
                     domain: 'www.scotthamper.com',
-                    expires: '01-01-2013',
+                    expires: '01/01/2013',
                     secure: false
                 };
             });
@@ -214,7 +214,7 @@
                 var options = {
                     path: '/nom',
                     domain: 'www.github.com',
-                    expires: '02-02-2013',
+                    expires: '02/02/2013',
                     secure: true
                 };
                 
@@ -244,7 +244,7 @@
             });
             
             it('returns `Cookies.defaults` with an overridden `expires` property when only `options.expires` is specified', function () {
-                var options = { expires: '02-02-2013' };
+                var options = { expires: '02/02/2013' };
                 
                 expect(Cookies._getExtendedOptions(options)).toEqual({
                     path: Cookies.defaults.path,
@@ -304,14 +304,14 @@
         
         describe('Cookies._getExpiresDate(expires)', function () {
             it('returns a Date object set to the current time plus <expires> seconds, when `expires` is a number', function () {
-                var now = new Date('01-01-2013 00:00:00');
+                var now = new Date('01/01/2013 00:00:00');
                 var expires = 5;
-                expect(Cookies._getExpiresDate(expires, now)).toEqual(new Date('01-01-2013 00:00:05'));
+                expect(Cookies._getExpiresDate(expires, now)).toEqual(new Date('01/01/2013 00:00:05'));
             });
             
             it('returns a Date object when `expires` is a valid Date parsable string', function () {
-                var expires = '01-01-2013';
-                expect(Cookies._getExpiresDate(expires)).toEqual(new Date('01-01-2013'));
+                var expires = '01/01/2013';
+                expect(Cookies._getExpiresDate(expires)).toEqual(new Date('01/01/2013'));
             });
             
             it('returns `expires` when `expires` is a Date object', function () {
@@ -377,7 +377,7 @@
             });
             
             it('includes the expiration date when `options.expires` is defined', function () {
-                var options = { expires: new Date('01-01-2013 GMT') };
+                var options = { expires: new Date('01/01/2013 00:00:00 GMT') };
                 var expected = 'key=value;expires=Tue, 01 Jan 2013 00:00:00 GMT';
                 
                 expect(Cookies._generateCookieString(key, value, options)).toEqual(expected);
