@@ -528,7 +528,7 @@ describe('INTEGRATION TESTS', function () {
     
     describe('Cookies.set(key, value[, options])', function () {
         afterEach(function () {
-            document.cookie = 'key=value;path=/;expires=' + new Date('01-01-2000').toGMTString();
+            document.cookie = 'key=value;path=/;expires=' + new Date('01/01/2000').toGMTString();
         });
         
         it('sets a cookie', function () {
