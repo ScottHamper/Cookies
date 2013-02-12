@@ -73,7 +73,7 @@ same way as 'max-age' (by setting `options.expires` to the number of seconds the
     
     // Setting cookies with expiration values
     Cookies.set('key', 'value', { expires: 600 }); // Expires in 10 minutes
-    Cookies.set('key', 'value', { expires: '01-01-2012' });
+    Cookies.set('key', 'value', { expires: '01/01/2012' });
     Cookies.set('key', 'value', { expires: new Date(2012, 0, 1) });
     
     // Using the alias
