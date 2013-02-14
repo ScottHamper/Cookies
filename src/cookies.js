@@ -1,6 +1,6 @@
 /*!
  * Cookies.js - 0.3.0
- * Wednesday, February 13 2013 @ 11:26 PM EST
+ * Thursday, February 14 2013 @ 3:52 AM EST
  *
  * Copyright (c) 2013, Scott Hamper
  * Licensed under the MIT license,
@@ -48,9 +48,7 @@
             || Cookies.set('cookies.js', 1).get('cookies.js') === '1';
     };
     
-    Cookies.enabled = (function () {
-        return Cookies._areEnabled();
-    })();
+    Cookies.enabled = Cookies._areEnabled();
     
     Cookies._getExtendedOptions = function (options) {
         return {
@@ -68,8 +66,8 @@
     Cookies._getExpiresDate = function (expires, now) {
         now = now || new Date();
         switch (typeof expires) {
-            case 'number': expires = new Date(now.getTime() + expires * 1000);
-            case 'string': expires = new Date(expires);
+            case 'number': expires = new Date(now.getTime() + expires * 1000); break;
+            case 'string': expires = new Date(expires); break;
         }
         
         if (expires && !Cookies._isValidDate(expires)) {
@@ -121,7 +119,7 @@
     // CommonJS and Node.js module support.
     } else if (typeof exports !== 'undefined') {
         // Support Node.js specific `module.exports` (which can be a function)
-        if (typeof module != 'undefined' && module.exports) {
+        if (typeof module !== 'undefined' && module.exports) {
             exports = module.exports = Cookies;
         }
         // But always support CommonJS module 1.1.1 spec (`exports` cannot be a function)
