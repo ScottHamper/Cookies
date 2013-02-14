@@ -1,6 +1,6 @@
 /*!
  * Cookies.js - 0.3.0
- * Thursday, February 14 2013 @ 3:52 AM EST
+ * Thursday, February 14 2013 @ 4:16 AM EST
  *
  * Copyright (c) 2013, Scott Hamper
  * Licensed under the MIT license,
@@ -44,8 +44,8 @@
     };
     
     Cookies._areEnabled = function () {
-        return Cookies._navigator.cookieEnabled
-            || Cookies.set('cookies.js', 1).get('cookies.js') === '1';
+        return Cookies._navigator.cookieEnabled ||
+            Cookies.set('cookies.js', 1).get('cookies.js') === '1';
     };
     
     Cookies.enabled = Cookies._areEnabled();
