@@ -136,8 +136,11 @@
             options = { expires: '01/01/2013' };
             
             spyOn(Cookies, '_getExpiresDate').andCallThrough();
-            Cookies.set(key, value, options);
             
+            Cookies.set(key, value, options);
+            expect(Cookies._getExpiresDate).toHaveBeenCalledWith(options.expires);
+            
+            Cookies.set(key, 0, options);
             expect(Cookies._getExpiresDate).toHaveBeenCalledWith(options.expires);
         });
         
