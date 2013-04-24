@@ -164,6 +164,10 @@ If any property is left undefined, the browser's default value will be used inst
     
 # Change Log
 
+## 0.3.1
+- Fixed a runtime error that prevented the library from loading when cookies were disabled in the client browser.
+- Fixed a bug in IE that would cause the library to improperly read cookies with a value of `""`.
+
 ## 0.3.0
 - Rewrote the library from the ground up, using test driven development. The public API remains unchanged.
 - Restructured project directories.
