@@ -1,6 +1,6 @@
 /*!
- * Cookies.js - 0.3.0
- * Tuesday, April 24 2013 @ 1:27 AM EST
+ * Cookies.js - 0.3.1
+ * Wednesday, April 24 2013 @ 1:31 AM EST
  *
  * Copyright (c) 2013, Scott Hamper
  * Licensed under the MIT license,
@@ -89,16 +89,27 @@
         var cookiesArray = documentCookie ? documentCookie.split('; ') : [];
         
         for (var i = 0; i < cookiesArray.length; i++) {
-            var separatorIndex = cookiesArray[i].indexOf('=');
-            var key = decodeURIComponent(cookiesArray[i].substr(0, separatorIndex));
-            
-            if (cookieObject[key] === undefined) {
-                var value = decodeURIComponent(cookiesArray[i].substr(separatorIndex + 1));
-                cookieObject[key] = value;
+			var cookieKvp = Cookies._getKeyValuePairFromCookieString(cookiesArray[i]);
+
+            if (cookieObject[cookieKvp.key] === undefined) {
+                cookieObject[cookieKvp.key] = cookieKvp.value;
             }
         }
         
         return cookieObject;
+    };
+    
+    Cookies._getKeyValuePairFromCookieString = function (cookieString) {
+        // "=" is a valid character in a cookie value according to RFC6265, so cannot `split('=')`
+        var separatorIndex = cookieString.indexOf('=');
+        
+        // IE omits the "=" when the cookie value is an empty string
+        separatorIndex = separatorIndex < 0 ? cookieString.length : separatorIndex;
+        
+        return {
+            key: decodeURIComponent(cookieString.substr(0, separatorIndex)),
+            value: decodeURIComponent(cookieString.substr(separatorIndex + 1))
+        };
     };
     
     Cookies._renewCache = function () {

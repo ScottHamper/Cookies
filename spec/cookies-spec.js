@@ -413,26 +413,41 @@
                     key: 'value'
                 });
             });
-            
+        });
+        
+        describe('Cookies._getKeyValuePairFromCookieString(cookieString)', function () {
             it('URI decodes cookie keys', function () {
-                var documentCookie = '%5C%22%2C%3B%20%C3%B1%C3%A2%C3%A9=value';
-                expect(Cookies._getCookieObjectFromString(documentCookie)).toEqual({
-                    '\\",; ñâé': 'value'
+                var cookieString = '%5C%22%2C%3B%20%C3%B1%C3%A2%C3%A9=value';
+                expect(Cookies._getKeyValuePairFromCookieString(cookieString)).toEqual({
+                    'key': '\\",; ñâé',
+					'value': 'value'
                 });
             });
             
             it('URI decodes cookie values', function () {
-                var documentCookie = 'key=%5C%22%2C%3B%20%C3%B1%C3%A2%C3%A9';
-                expect(Cookies._getCookieObjectFromString(documentCookie)).toEqual({
-                    key: '\\",; ñâé'
+                var cookieString = 'key=%5C%22%2C%3B%20%C3%B1%C3%A2%C3%A9';
+                expect(Cookies._getKeyValuePairFromCookieString(cookieString)).toEqual({
+                    key: 'key',
+					value: '\\",; ñâé'
                 });
             });
-            
-            it('parses cookie values containing an "=" character', function () {
-                var documentCookie = 'key=value=value';
-                expect(Cookies._getCookieObjectFromString(documentCookie)).toEqual({
-                    key: 'value=value'
+			
+			it('parses cookie values containing an "=" character', function () {
+                var cookieString = 'key=value=value';
+                expect(Cookies._getKeyValuePairFromCookieString(cookieString)).toEqual({
+                    key: 'key',
+					value: 'value=value'
                 });
+            });
+			
+			it('parses cookies with an empty string for the value', function () {
+                var cookieString = 'key=';
+                var expected = { key: 'key', value: '' };
+                
+                expect(Cookies._getKeyValuePairFromCookieString(cookieString)).toEqual(expected);
+                
+                cookieString = 'key'; // IE omits the "="
+                expect(Cookies._getKeyValuePairFromCookieString(cookieString)).toEqual(expected);
             });
         });
 
