@@ -420,7 +420,7 @@
                 var cookieString = '%5C%22%2C%3B%20%C3%B1%C3%A2%C3%A9=value';
                 expect(Cookies._getKeyValuePairFromCookieString(cookieString)).toEqual({
                     'key': '\\",; ñâé',
-					'value': 'value'
+                    'value': 'value'
                 });
             });
             
@@ -428,19 +428,19 @@
                 var cookieString = 'key=%5C%22%2C%3B%20%C3%B1%C3%A2%C3%A9';
                 expect(Cookies._getKeyValuePairFromCookieString(cookieString)).toEqual({
                     key: 'key',
-					value: '\\",; ñâé'
+                    value: '\\",; ñâé'
                 });
             });
-			
-			it('parses cookie values containing an "=" character', function () {
+            
+            it('parses cookie values containing an "=" character', function () {
                 var cookieString = 'key=value=value';
                 expect(Cookies._getKeyValuePairFromCookieString(cookieString)).toEqual({
                     key: 'key',
-					value: 'value=value'
+                    value: 'value=value'
                 });
             });
-			
-			it('parses cookies with an empty string for the value', function () {
+            
+            it('parses cookies with an empty string for the value', function () {
                 var cookieString = 'key=';
                 var expected = { key: 'key', value: '' };
                 
