@@ -1,6 +1,6 @@
 /*!
  * Cookies.js - 0.3.0
- * Thursday, February 14 2013 @ 4:16 AM EST
+ * Tuesday, April 24 2013 @ 1:27 AM EST
  *
  * Copyright (c) 2013, Scott Hamper
  * Licensed under the MIT license,
@@ -42,13 +42,6 @@
     Cookies.expire = function (key, options) {
         return Cookies.set(key, undefined, options);
     };
-    
-    Cookies._areEnabled = function () {
-        return Cookies._navigator.cookieEnabled ||
-            Cookies.set('cookies.js', 1).get('cookies.js') === '1';
-    };
-    
-    Cookies.enabled = Cookies._areEnabled();
     
     Cookies._getExtendedOptions = function (options) {
         return {
@@ -112,6 +105,13 @@
         Cookies._cache = Cookies._getCookieObjectFromString(Cookies._document.cookie);
         Cookies._cachedDocumentCookie = Cookies._document.cookie;
     };
+	
+	Cookies._areEnabled = function () {
+        return Cookies._navigator.cookieEnabled ||
+            Cookies.set('cookies.js', 1).get('cookies.js') === '1';
+    };
+    
+    Cookies.enabled = Cookies._areEnabled();
     
     // AMD support
     if (typeof define === 'function' && define.amd) {
