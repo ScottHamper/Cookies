@@ -6,7 +6,7 @@ Cookies.js is a small client-side javascript library that makes managing cookies
 - Caches cookie values, making sequential reads faster.
 - Supports AMD / CommonJS loaders.
 - Cross browser.
-- Lightweight (less than 1 KB, minified and gzipped).
+- Lightweight.
 - [RFC6265](http://www.rfc-editor.org/rfc/rfc6265.txt) Compliant.
 
 ## Browser Compatibility
@@ -16,6 +16,14 @@ The following browsers have passed all of the Cookies.js unit tests:
 - Safari 4+
 - Opera 10+
 - Internet Explorer 6+
+
+## Getting the Library
+Direct downloads
+- [Unminified](https://raw.github.com/ScottHamper/Cookies/master/src/cookies.js) (For Development, ~1.7 KB gzipped)
+- [Minified](https://raw.github.com/ScottHamper/Cookies/master/src/cookies.min.js) (For Production, ~1 KB gzipped)
+
+Node Package Manager
+`npm install cookies-js`
 
 ## A Note About Encoding
 Cookies.js URI encodes cookie keys and values, and expects cookie keys to be URI encoded when accessing a cookie.
