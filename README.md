@@ -19,10 +19,11 @@ The following browsers have passed all of the Cookies.js unit tests:
 
 ## Getting the Library
 Direct downloads
-- [Unminified](https://raw.github.com/ScottHamper/Cookies/master/src/cookies.js) (For Development, ~1.7 KB gzipped)
-- [Minified](https://raw.github.com/ScottHamper/Cookies/master/src/cookies.min.js) (For Production, ~1 KB gzipped)
+- [Minified](https://raw.github.com/ScottHamper/Cookies/master/src/cookies.min.js) (~1 KB gzipped)
+- [Unminified](https://raw.github.com/ScottHamper/Cookies/master/src/cookies.js) (~1.7 KB gzipped)
 
 Node Package Manager
+
 `npm install cookies-js`
 
 ## A Note About Encoding
