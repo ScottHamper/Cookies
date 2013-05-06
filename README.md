@@ -70,22 +70,24 @@ However, Cookies.js simplifies things by allowing the `options.expires` property
 same way as 'max-age' (by setting `options.expires` to the number of seconds the cookie should exist for).
 
 #### Example usage:
-    // Setting a cookie value
-    Cookies.set('key', 'value');
-    
-    // Chaining sets together
-    Cookies.set('key', 'value').set('hello', 'world');
-    
-    // Setting cookies with additional options
-    Cookies.set('key', 'value', { domain: 'www.example.com', secure: true });
-    
-    // Setting cookies with expiration values
-    Cookies.set('key', 'value', { expires: 600 }); // Expires in 10 minutes
-    Cookies.set('key', 'value', { expires: '01/01/2012' });
-    Cookies.set('key', 'value', { expires: new Date(2012, 0, 1) });
-    
-    // Using the alias
-    Cookies('key', 'value', { secure: true });
+```javascript
+// Setting a cookie value
+Cookies.set('key', 'value');
+
+// Chaining sets together
+Cookies.set('key', 'value').set('hello', 'world');
+
+// Setting cookies with additional options
+Cookies.set('key', 'value', { domain: 'www.example.com', secure: true });
+
+// Setting cookies with expiration values
+Cookies.set('key', 'value', { expires: 600 }); // Expires in 10 minutes
+Cookies.set('key', 'value', { expires: '01/01/2012' });
+Cookies.set('key', 'value', { expires: new Date(2012, 0, 1) });
+
+// Using the alias
+Cookies('key', 'value', { secure: true });
+```
 
 ### Cookies.get(key)
 *Alias: Cookies(key)*
@@ -99,14 +101,16 @@ Retrieves the cookie value of the most locally scoped cookie with the specified 
 The string value of the cookie.
 
 #### Example Usage:
-    // First set a cookie
-    Cookies.set('key', 'value');
-    
-    // Get the cookie value
-    Cookies.get('key'); // "value"
-    
-    // Using the alias
-    Cookies('key'); // "value"
+```javascript
+// First set a cookie
+Cookies.set('key', 'value');
+
+// Get the cookie value
+Cookies.get('key'); // "value"
+
+// Using the alias
+Cookies('key'); // "value"
+```
     
 ### Cookies.expire(key [, options])
 *Alias: Cookies(key, `undefined` [, options])*
@@ -128,14 +132,16 @@ If any property is left `undefined`, the browser's default value will be used in
 for any property may be set in the `Cookies.defaults` object.
 
 #### Example Usage:
-    // First set a cookie and get its value
-    Cookies.set('key', 'value').get('key'); // "value"
-    
-    // Expire the cookie and try to get its value
-    Cookies.expire('key').get('key'); // undefined
-    
-    // Using the alias instead
-    Cookies('key', undefined);
+```javascript
+// First set a cookie and get its value
+Cookies.set('key', 'value').get('key'); // "value"
+
+// Expire the cookie and try to get its value
+Cookies.expire('key').get('key'); // undefined
+
+// Using the alias instead
+Cookies('key', undefined);
+```
     
 
 ## Properties
@@ -144,9 +150,11 @@ for any property may be set in the `Cookies.defaults` object.
 A boolean value of whether or not the browser has cookies enabled.
 
 #### Example Usage:
-    if (Cookies.enabled) {
-        Cookies.set('key', 'value');
-    }
+```javascript
+if (Cookies.enabled) {
+    Cookies.set('key', 'value');
+}
+```
 
 ### Cookies.defaults
 An object representing default options to be used when setting and expiring cookie values.
@@ -161,14 +169,15 @@ By default, only `Cookies.defaults.path` is set to `'/'`, all other properties a
 If any property is left undefined, the browser's default value will be used instead.
 
 #### Example Usage:
-    Cookies.defaults = {
-        path: '/',
-        secure: true
-    };
-    
-    Cookies.set('key', 'value'); // Will be secure and have a path of '/'
-    Cookies.expire('key'); // Will expire the cookie with a path of '/'
-    
+```javascript
+Cookies.defaults = {
+    path: '/',
+    secure: true
+};
+
+Cookies.set('key', 'value'); // Will be secure and have a path of '/'
+Cookies.expire('key'); // Will expire the cookie with a path of '/'
+```
     
 # Change Log
 
