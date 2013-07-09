@@ -42,6 +42,16 @@ every `'+'` to a space character. Instead, use
 
 ## Methods
 
+### Cookies.all()
+*Alias: Cookies()*
+
+Gets an object containing all the cookies.
+
+### Cookies.get(key)
+*Alias: Cookies(key)*
+
+Retrieves the cookie value of the most locally scoped cookie with the specified key.
+
 ### Cookies.set(key, value [, options])
 *Alias: Cookies(key, value [, options])*
 
@@ -88,11 +98,6 @@ Cookies.set('key', 'value', { expires: new Date(2012, 0, 1) });
 // Using the alias
 Cookies('key', 'value', { secure: true });
 ```
-
-### Cookies.get(key)
-*Alias: Cookies(key)*
-
-Retrieves the cookie value of the most locally scoped cookie with the specified key.
 
 #### Arguments:
 *key*: A string value of a cookie key

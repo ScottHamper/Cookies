@@ -10,8 +10,12 @@
     'use strict';
 
     var Cookies = function (key, value, options) {
-        return arguments.length === 1 ?
-            Cookies.get(key) : Cookies.set(key, value, options);
+        if(arguments.length === 0)
+            return Cookies.all();
+        else if(arguments.length === 1)
+            return Cookies.get(key);
+        else
+            return Cookies.set(key, value, options);
     };
 
     // Allows for setter injection in unit tests
@@ -22,12 +26,16 @@
         path: '/'
     };
 
-    Cookies.get = function (key) {
-        if (Cookies._cachedDocumentCookie !== Cookies._document.cookie) {
+    Cookies.all = function() {
+    	if (Cookies._cachedDocumentCookie !== Cookies._document.cookie) {
             Cookies._renewCache();
         }
 
-        return Cookies._cache[key];
+		return Cookies._cache;
+	};
+
+    Cookies.get = function (key) {
+        return Cookies.all()[key];
     };
 
     Cookies.set = function (key, value, options) {
