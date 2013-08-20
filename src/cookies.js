@@ -78,7 +78,7 @@
         var cookieString = key + '=' + value;
         cookieString += options.path ? ';path=' + options.path : '';
         cookieString += options.domain ? ';domain=' + options.domain : '';
-        cookieString += options.expires ? ';expires=' + options.expires.toGMTString() : '';
+        cookieString += options.expires ? ';expires=' + options.expires.toUTCString() : '';
         cookieString += options.secure ? ';secure' : '';
 
         return cookieString;
