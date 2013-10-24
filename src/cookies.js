@@ -6,13 +6,14 @@
  * Licensed under the MIT license,
  * http://www.opensource.org/licenses/MIT
  */
-(function (undefined) {
+(function (context, undefined) {
     'use strict';
 
-    var Cookies = function (key, value, options) {
-        return arguments.length === 1 ?
-            Cookies.get(key) : Cookies.set(key, value, options);
-    };
+    var _Cookies = context.Cookies,
+        Cookies = function (key, value, options) {
+            return arguments.length === 1 ?
+                Cookies.get(key) : Cookies.set(key, value, options);
+        };
 
     // Allows for setter injection in unit tests
     Cookies._document = document;
@@ -124,6 +125,13 @@
 
     Cookies.enabled = Cookies._areEnabled();
 
+    // Revert the global `Cookies` to its previous value and return a reference to this version
+    Cookies.noConflict = function () {
+        context.Cookies = _Cookies;
+
+        return Cookies;
+    };
+
     // AMD support
     if (typeof define === 'function' && define.amd) {
         define(function () { return Cookies; });
@@ -138,4 +146,4 @@
     } else {
         window.Cookies = Cookies;
     }
-})();
+})(this);
