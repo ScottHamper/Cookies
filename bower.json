@@ -1,6 +1,6 @@
 {
-  "name": "Cookies",
-  "version": "0.3.1",
+  "name": "cookies-js",
+  "version": "0.3.2",
   "main": "src/cookies.js",
   "ignore": [
     "lib",

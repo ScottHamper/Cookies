@@ -25,6 +25,9 @@ The following browsers have passed all of the Cookies.js unit tests:
 ### Node Package Manager
 `npm install cookies-js`
 
+### Bower
+`bower install cookies-js`
+
 ## A Note About Encoding
 Cookies.js URI encodes cookie keys and values, and expects cookie keys to be URI encoded when accessing a cookie.
 Keep this in mind when working with cookies on the server side.
