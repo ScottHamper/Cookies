@@ -6,10 +6,10 @@
  * Licensed under the MIT license,
  * http://www.opensource.org/licenses/MIT
  */
-(function (context, undefined) {
+(function (undefined) {
     'use strict';
 
-    var _Cookies = context.Cookies,
+    var _Cookies = window.Cookies,
         Cookies = function (key, value, options) {
             return arguments.length === 1 ?
                 Cookies.get(key) : Cookies.set(key, value, options);
@@ -127,7 +127,7 @@
 
     // Revert the global `Cookies` to its previous value and return a reference to this version
     Cookies.noConflict = function () {
-        context.Cookies = _Cookies;
+        window.Cookies = _Cookies;
 
         return Cookies;
     };
@@ -146,4 +146,4 @@
     } else {
         window.Cookies = Cookies;
     }
-})(this);
+})();
