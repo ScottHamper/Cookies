@@ -193,6 +193,24 @@
         });
     });
 
+    describe('Cookies.noConflict()', function () {
+        var originalCookies = Cookies;
+
+        it('reverts the global `Cookies` to its previous value', function () {
+            Cookies.noConflict();
+
+            expect(Cookies).toBeUndefined();
+        });
+
+        it('returns `Cookies`', function () {
+            expect(Cookies.noConflict()).toEqual(originalCookies);
+        });
+
+        afterEach(function () {
+            Cookies = originalCookies;
+        });
+    });
+
     describe('"PRIVATE" FUNCTIONS', function () {
         describe('Cookies._getExtendedOptions(options)', function () {
             var originalDefaults = Cookies.defaults;
