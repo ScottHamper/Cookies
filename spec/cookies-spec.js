@@ -478,12 +478,7 @@
                 Cookies._navigator = mockNavigator;
             });
             
-            it('returns true if `navigator.cookieEnabled` is true', function () {
-                mockNavigator.cookieEnabled = true;
-                expect(Cookies._areEnabled()).toBe(true);
-            });
-            
-            it('attempts to set and get a cookie with a key of `cookies.js` when `navigator.cookieEnabled` is not true', function () {
+            it('attempts to set and get a cookie with a key of `cookies.js`', function () {
                 var key = 'cookies.js';
                 var value = 1;
                 var documentCookie = 'cookies.js=1';
@@ -496,18 +491,7 @@
                 expect(Cookies.get).toHaveBeenCalledWith(key);
             });
             
-            it('does not attempt to set or get a cookie when `navigator.cookieEnabled` is true', function () {
-                mockNavigator.cookieEnabled = true;
-                
-                spyOn(Cookies, 'set');
-                spyOn(Cookies, 'get');
-                Cookies._areEnabled();
-                
-                expect(Cookies.set).not.toHaveBeenCalled();
-                expect(Cookies.get).not.toHaveBeenCalled();
-            });
-            
-            it('returns `true` if `navigator.cookieEnabled` is not true, but a cookie can be set and retrieved successfully', function () {
+            it('returns `true` if a cookie can be set and retrieved successfully', function () {
                 spyOn(Cookies, 'set').andCallFake(function () {
                     mockDocument.cookie = 'cookies.js=1';
                     return Cookies;
@@ -516,7 +500,7 @@
                 expect(Cookies._areEnabled()).toBe(true);
             });
             
-            it('returns `false` if `navigator.cookieEnabled` is not true, and a cookie cannot be set and retrieved successfully', function () {
+            it('returns `false` if a cookie cannot be set and retrieved successfully', function () {
                 mockDocument.cookie = '';
                 expect(Cookies._areEnabled()).toBe(false);
             });

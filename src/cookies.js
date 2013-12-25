@@ -118,8 +118,7 @@
     };
 
     Cookies._areEnabled = function () {
-        return Cookies._navigator.cookieEnabled ||
-            Cookies.set('cookies.js', 1).get('cookies.js') === '1';
+        return Cookies.set('cookies.js', 1).get('cookies.js') === '1';
     };
 
     Cookies.enabled = Cookies._areEnabled();
