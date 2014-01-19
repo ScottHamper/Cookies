@@ -118,7 +118,9 @@
     };
 
     Cookies._areEnabled = function () {
-        return Cookies.set('cookies.js', 1).get('cookies.js') === '1';
+        var areEnabled = Cookies.set('cookies.js', 1).get('cookies.js') === '1';
+        Cookies.expire('cookies.js');
+        return areEnabled;
     };
 
     Cookies.enabled = Cookies._areEnabled();
