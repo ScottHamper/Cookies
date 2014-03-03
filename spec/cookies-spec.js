@@ -472,14 +472,15 @@
         
         describe('Cookies._areEnabled()', function () {
             var mockNavigator;
+            var key;
             
             beforeEach(function () {
+                key = 'cookies.js';
                 mockNavigator = {};
                 Cookies._navigator = mockNavigator;
             });
             
             it('attempts to set and get a cookie with a key of `cookies.js`', function () {
-                var key = 'cookies.js';
                 var value = 1;
                 var documentCookie = 'cookies.js=1';
                 
@@ -503,6 +504,14 @@
             it('returns `false` if a cookie cannot be set and retrieved successfully', function () {
                 mockDocument.cookie = '';
                 expect(Cookies._areEnabled()).toBe(false);
+            });
+
+            it('expires the test cookie when done', function () {
+                spyOn(Cookies, 'expire').andCallThrough();
+                
+                Cookies._areEnabled();
+                
+                expect(Cookies.expire).toHaveBeenCalledWith(key);
             });
         });
     });
