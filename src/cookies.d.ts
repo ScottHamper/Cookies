@@ -9,21 +9,25 @@
  */
  
 interface CookieOptions {
-    path: string;
-    domain: string;
-    expires: any;
-    secure: bool;
+    path?: string;
+    domain?: string;
+    expires?: any;
+    secure?: boolean;
 }
 
 interface CookiesStatic {
-    (key: string, value?: any, options?: CookieOptions): any;
-    
-    get(key: string): string;
-    set(key: string, value: any, options?: CookieOptions): CookiesStatic;
-    expire(key: string, options?: CookieOptions): CookiesStatic;
-    
+    (key:string, value?:any, options?:CookieOptions): any;
+
+    get(key:string): string;
+    set(key:string, value:any, options?:CookieOptions): CookiesStatic;
+    expire(key:string, options?:CookieOptions): CookiesStatic;
+
     defaults: CookieOptions;
-    enabled: bool;
+    enabled: boolean;
 }
 
-declare var Cookies: CookiesStatic;
+declare var Cookies:CookiesStatic;
+
+declare module "cookies" {
+    export = Cookies;
+}
