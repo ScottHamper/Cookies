@@ -29,16 +29,20 @@ The following browsers have passed all of the Cookies.js unit tests:
 `bower install cookies-js`
 
 ## A Note About Encoding
-Cookies.js URI encodes cookie keys and values, and expects cookie keys to be URI encoded when accessing a cookie.
-Keep this in mind when working with cookies on the server side.
+[RFC6265](http://www.rfc-editor.org/rfc/rfc6265.txt) defines a strict set of allowed characters for
+cookie keys and values. In order to effectively allow any character to be used in a key or value,
+Cookies.js will URI encode disallowed characters in their UTF-8 representation. As such, Cookies.js
+also expects cookie keys and values to already be URI encoded in a UTF-8 representation when it
+accesses cookies. Keep this in mind when working with cookies on the server side.
 
 ### .NET Users
 Do not use [HttpUtility.UrlEncode](http://msdn.microsoft.com/en-us/library/4fkewx0t.aspx) and
-[HttpUtility.UrlDecode](http://msdn.microsoft.com/en-us/library/adwtk1fy.aspx) on cookie keys or values. `HttpUtility.UrlEncode` will
-improperly escape space characters to `'+'` and lower case every escape sequence. `HttpUtility.UrlDecode` will improperly unescape
-every `'+'` to a space character. Instead, use
-[System.Uri.EscapeDataString](http://msdn.microsoft.com/en-us/library/system.uri.escapedatastring.aspx) and
-[System.Uri.UnescapeDataString](http://msdn.microsoft.com/en-us/library/system.uri.unescapedatastring.aspx).
+[HttpUtility.UrlDecode](http://msdn.microsoft.com/en-us/library/adwtk1fy.aspx) on cookie keys or
+values. `HttpUtility.UrlEncode` will improperly escape space characters to `'+'` and lower case every
+escape sequence. `HttpUtility.UrlDecode` will improperly unescape every `'+'` to a space character.
+Instead, use
+[System.Uri.EscapeDataString](http://msdn.microsoft.com/en-us/library/system.uri.escapedatastring.aspx)
+and [System.Uri.UnescapeDataString](http://msdn.microsoft.com/en-us/library/system.uri.unescapedatastring.aspx).
 
 
 # API Reference
