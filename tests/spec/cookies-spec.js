@@ -1,4 +1,11 @@
-﻿describe('UNIT TESTS', function () {
+﻿/*!
+ * cookies-spec.js
+ *
+ * Copyright (c) 2014, Scott Hamper
+ * Licensed under the MIT license,
+ * http://www.opensource.org/licenses/MIT
+ */
+describe('UNIT TESTS', function () {
     var mockDocument;
 
     beforeEach(function () {

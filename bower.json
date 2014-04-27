@@ -1,11 +1,9 @@
 {
-  "name": "cookies-js",
-  "version": "0.3.1",
-  "main": "src/cookies.js",
-  "ignore": [
-    "lib",
-    "spec",
-    "package.json",
-    "SpecRunner.html"
-  ]
+    "name"      : "cookies-js",
+    "version"   : "0.3.2",
+    "main"      : "src/cookies.js",
+    "ignore"    : [
+        "tests",
+        "package.json"
+    ]
 }

@@ -1,6 +1,5 @@
 /*!
- * Cookies.d.ts - 0.2
- * TypeScript declaration file for Cookies.js 0.3.1
+ * Cookies.d.ts
  *
  * Copyright (c) 2014, Scott Hamper
  * Licensed under the MIT license,
