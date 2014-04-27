@@ -354,20 +354,30 @@
                 value = 0;
                 expect(Cookies._generateCookieString(key, value)).toEqual('key=0');
             });
-            
+
             it('URI encodes the `key`', function () {
                 key = '\\",; ñâé';
                 expect(Cookies._generateCookieString(key, value)).toEqual('%5C%22%2C%3B%20%C3%B1%C3%A2%C3%A9=value');
             });
-            
+
+            it('does not URI encode characters in the `key` that are allowed by RFC6265, except for the "%" character', function () {
+                key = '#$%&+^`|';
+                expect(Cookies._generateCookieString(key, value)).toEqual('#$%25&+^`|=value');
+            });
+
+            it('URI encodes characters in the `key` that are not allowed by RFC6265, but are not encoded by `encodeURIComponent`', function () {
+                key = '()';
+                expect(Cookies._generateCookieString(key, value)).toEqual('%28%29=value');
+            });
+
             it('URI encodes special characters in the `value`, as defined by RFC6265, as well as the "%" character', function () {
                 value = '\\",; ñâé%';
                 expect(Cookies._generateCookieString(key, value)).toEqual('key=%5C%22%2C%3B%20%C3%B1%C3%A2%C3%A9%25');
             });
             
-            it('does not URI encode special characters in the `value` which are not defined as special by RFC6265, except the "%" character', function () {
-                value = '#$&+/:<=>?@[]^`{|}~';
-                expect(Cookies._generateCookieString(key, value)).toEqual('key=#$&+/:<=>?@[]^`{|}~');
+            it('does not URI encode characters in the `value` that are allowed by RFC6265, except for the "%" character', function () {
+                value = '#$&+/:<=>?@[]^`{|}~%';
+                expect(Cookies._generateCookieString(key, value)).toEqual('key=#$&+/:<=>?@[]^`{|}~%25');
             });
             
             it('includes the path when `options.path` is defined', function () {

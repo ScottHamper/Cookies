@@ -1,8 +1,7 @@
 /*!
  * Cookies.js - 0.3.1
- * Wednesday, April 24 2013 @ 2:28 AM EST
  *
- * Copyright (c) 2013, Scott Hamper
+ * Copyright (c) 2014, Scott Hamper
  * Licensed under the MIT license,
  * http://www.opensource.org/licenses/MIT
  */
@@ -71,7 +70,8 @@
     };
 
     Cookies._generateCookieString = function (key, value, options) {
-        key = encodeURIComponent(key);
+        key = key.replace(/[^#$&+\^`|]/g, encodeURIComponent);
+        key = key.replace(/\(/g, '%28').replace(/\)/g, '%29');
         value = (value + '').replace(/[^!#$&-+\--:<-\[\]-~]/g, encodeURIComponent);
         options = options || {};
 
