@@ -1,10 +1,10 @@
 # Change Log
 
 ## 0.3.2
-- Replaced deprecated `toGMTString` with `toUTCString` (Thanks @Zorbash!)
-- Added a proper bower.json file (Thanks @jstayton!)
-- Fixed bug where `Cookies.enabled` was always returning true in IE7 and IE8 (Thanks @brianlow!)
-- Updated cookies.d.ts for Typescript 1.0 (Thanks @flashandy!)
+- Replaced deprecated `toGMTString` with `toUTCString` (Thanks [@Zorbash](https://github.com/Zorbash)!)
+- Added a proper bower.json file (Thanks [@jstayton](https://github.com/jstayton)!)
+- Fixed bug where `Cookies.enabled` was always returning true in IE7 and IE8 (Thanks [@brianlow](https://github.com/brianlow)!)
+- Updated cookies.d.ts for Typescript 1.0 (Thanks [@flashandy](https://github.com/flashandy)!)
 - Fixed unnecessarily encoding characters in cookie keys that are allowed by RFC6265, and
   fixed not encoding a couple characters in cookies keys that are not allowed by RFC6265.
   ([Issue #18](https://github.com/ScottHamper/Cookies/issues/18))
