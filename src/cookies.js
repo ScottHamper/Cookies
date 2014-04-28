@@ -1,5 +1,5 @@
 /*!
- * Cookies.js - 0.3.2
+ * Cookies.js - 0.4.0
  *
  * Copyright (c) 2014, Scott Hamper
  * Licensed under the MIT license,
