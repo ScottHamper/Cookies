@@ -10,5 +10,8 @@
         "type": "git",
         "url": "git://github.com/ScottHamper/Cookies.git"
     },
-    "main"          : "./src/cookies.js"
+    "main"          : "./src/cookies.js",
+    "spm"           : {
+        "main": "src/cookies.js"
+    }
 }
