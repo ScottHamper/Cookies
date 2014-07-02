@@ -70,9 +70,9 @@
     };
 
     Cookies._generateCookieString = function (key, value, options) {
-        key = key.replace(/[^#$&+\^`|]/g, encodeURIComponent);
+        key = key.replace(/[^#$&+\^`|]/g, function(s) { return encodeURIComponent(s) });
         key = key.replace(/\(/g, '%28').replace(/\)/g, '%29');
-        value = (value + '').replace(/[^!#$&-+\--:<-\[\]-~]/g, encodeURIComponent);
+        value = (value + '').replace(/[^!#$&-+\--:<-\[\]-~]/g, function(s) { return encodeURIComponent(s) });
         options = options || {};
 
         var cookieString = key + '=' + value;
