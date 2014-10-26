@@ -100,7 +100,7 @@ Cookies('key', 'value', { secure: true });
 #### Cookies.get(key)
 *Alias: Cookies(key)*
 
-Returns the cookie value of the most locally scoped cookie with the specified key.
+Returns the value of the most locally scoped cookie with the specified key.
 
 **Example Usage**
 ```javascript
