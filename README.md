@@ -3,11 +3,10 @@
 Cookies.js is a small client-side javascript library that makes managing cookies easy.
 
 ## Features
-- Caches cookie values, making sequential reads faster.
-- Supports AMD / CommonJS loaders.
-- Cross browser.
-- Lightweight.
-- [RFC6265](http://www.rfc-editor.org/rfc/rfc6265.txt) Compliant.
+- [RFC6265](http://www.rfc-editor.org/rfc/rfc6265.txt) Compliant
+- Cross browser
+- Lightweight
+- Supports AMD / CommonJS loaders
 
 ## Browser Compatibility
 The following browsers have passed all of the Cookies.js unit tests:
