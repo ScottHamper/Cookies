@@ -1,5 +1,9 @@
 # Change Log
 
+## 1.0.0
+- Put Cookies.js into the public domain.
+- Explicitly defaulted the `secure` option to `false`.
+
 ## 0.4.0
 - Replaced deprecated `toGMTString` with `toUTCString` (Thanks [@Zorbash](https://github.com/Zorbash)!)
 - Added a proper bower.json file (Thanks [@jstayton](https://github.com/jstayton)!)
