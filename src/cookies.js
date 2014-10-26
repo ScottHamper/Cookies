@@ -17,7 +17,8 @@
     Cookies._navigator = navigator;
 
     Cookies.defaults = {
-        path: '/'
+        path: '/',
+        secure: false
     };
 
     Cookies.get = function (key) {
