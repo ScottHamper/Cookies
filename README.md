@@ -52,14 +52,14 @@ and [System.Uri.UnescapeDataString](http://msdn.microsoft.com/en-us/library/syst
 
 # API Reference
 
-**[Methods](#methods)**
-- [Cookies.set(key, value [, options])](#cookiessetkey-value--options)
-- [Cookies.get(key)](#cookiesgetkey)
-- [Cookies.expire(key [, options])](#cookiesexpirekey--options)
+**Methods**  
+[Cookies.set(key, value [, options])](#cookiessetkey-value--options)  
+[Cookies.get(key)](#cookiesgetkey)  
+[Cookies.expire(key [, options])](#cookiesexpirekey--options)
 
-**[Properties](#properties)**
-- [Cookies.enabled](#cookiesenabled)
-- [Cookies.defaults](#cookiesdefaults)
+**Properties**  
+[Cookies.enabled](#cookiesenabled)  
+[Cookies.defaults](#cookiesdefaults)
 
 ## Methods
 
