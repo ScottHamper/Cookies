@@ -2,10 +2,10 @@
 
 Cookies.js is a small client-side javascript library that makes managing cookies easy.
 
-[Features](#features)
-[Browser Compatibility](#browser-compatibility)
-[Getting the Library](#getting-the-library)
-[A Note About Encoding](#a-note-about-encoding)
+[Features](#features)  
+[Browser Compatibility](#browser-compatibility)  
+[Getting the Library](#getting-the-library)  
+[A Note About Encoding](#a-note-about-encoding)  
 [API Reference](#api-reference)
 
 ## Features
@@ -52,12 +52,12 @@ and [System.Uri.UnescapeDataString](http://msdn.microsoft.com/en-us/library/syst
 
 # API Reference
 
-** [Methods](#methods) **
+**[Methods](#methods)**
 - [Cookies.set(key, value [, options])](#cookiessetkey-value--options)
 - [Cookies.get(key)](#cookiesgetkey)
 - [Cookies.expire(key [, options])](#cookiesexpirekey--options)
 
-** [Properties](#properties) **
+**[Properties](#properties)**
 - [Cookies.enabled](#cookiesenabled)
 - [Cookies.defaults](#cookiesdefaults)
 
