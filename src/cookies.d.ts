@@ -1,11 +1,9 @@
-/*!
- * Cookies.d.ts
+/*
+ * Cookies.js TypeScript Declaration File
+ * https://github.com/ScottHamper/Cookies
  *
- * Copyright (c) 2014, Scott Hamper
- * Licensed under the MIT license,
- * http://www.opensource.org/licenses/MIT
+ * This is free and unencumbered software released into the public domain.
  */
- 
 interface CookieOptions {
     path?: string;
     domain?: string;
