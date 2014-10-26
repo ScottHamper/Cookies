@@ -55,8 +55,8 @@ describe('UNIT TESTS', function () {
             expect(Cookies.defaults.expires).toBeUndefined();
         });
         
-        it('has an undefined `secure` value', function () {
-            expect(Cookies.defaults.secure).toBeUndefined();
+        it('has a defined `secure` value of `false`', function () {
+            expect(Cookies.defaults.secure).toBe(false);
         });
     });
 
