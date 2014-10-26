@@ -66,24 +66,16 @@ and [System.Uri.UnescapeDataString](http://msdn.microsoft.com/en-us/library/syst
 #### Cookies.set(key, value [, options])
 *Alias: Cookies(key, value [, options])*
 
-Sets a cookie in the document. If the cookie does not already exist, it will be created.
+Sets a cookie in the document. If the cookie does not already exist, it will be created. Returns the `Cookies` object.
 
-**Arguments**  
-*key*: A string value of the cookie key to set  
-*value*: A string value of the cookie value to set  
-*options*: An object containing additional parameters about the cookie (discussed below)
+| Option    | Description                                                                                      | Default     |
+| --------: | ------------------------------------------------------------------------------------------------ | ----------- |
+|    *path* | A string value of the path of the cookie                                                         | `"/"`       |
+|  *domain* | A string value of the domain of the cookie                                                       | `undefined` |
+| *expires* | A number (of seconds), a date parsable string, or a `Date` object of when the cookie will expire | `undefined` |
+|  *secure* | A boolean value of whether or not the cookie should only be available over SSL                   | `false`     |
 
-**Returns**  
-The `Cookies` object is returned to support chaining.
-
-**The 'options' Object**  
-*path*: A string value of the path of the cookie  
-*domain*: A string value of the domain of the cookie  
-*expires*: A number (of seconds), a date parsable string, or a `Date` object of when the cookie will expire  
-*secure*: A boolean value of whether or not the cookie should only be available over SSL
-
-If any property is left undefined, the browser's default value will be used instead. A default value
-for any property may be set in the `Cookies.defaults` object.
+A default value for any option may be set in the `Cookies.defaults` object.
 
 **Example Usage**
 ```javascript
@@ -110,12 +102,6 @@ Cookies('key', 'value', { secure: true });
 
 Retrieves the cookie value of the most locally scoped cookie with the specified key.
 
-**Arguments**  
-*key*: A string value of a cookie key
-
-**Returns**  
-The string value of the cookie.
-
 **Example Usage**
 ```javascript
 // First set a cookie
@@ -131,21 +117,14 @@ Cookies('key'); // "value"
 #### Cookies.expire(key [, options])
 *Alias: Cookies(key, `undefined` [, options])*
 
-Expires a cookie, removing it from the document.
+Expires a cookie, removing it from the document. Returns the `Cookies` object.
 
-**Arguments**  
-*key*: A string value of the cookie key to expire  
-*options*: An object containing additional parameters about the cookie (discussed below)
+| Option    | Description                                                                                      | Default     |
+| --------: | ------------------------------------------------------------------------------------------------ | ----------- |
+|    *path* | A string value of the path of the cookie                                                         | `"/"`       |
+|  *domain* | A string value of the domain of the cookie                                                       | `undefined` |
 
-**Returns**  
-The `Cookies` object is returned to support chaining.
-
-**The 'options' Object**  
-*path*: A string value of the path of the cookie  
-*domain*: A string value of the domain of the cookie
-
-If any property is left `undefined`, the browser's default value will be used instead. A default value
-for any property may be set in the `Cookies.defaults` object.
+A default value for any option may be set in the `Cookies.defaults` object.
 
 **Example Usage**
 ```javascript
@@ -174,15 +153,13 @@ if (Cookies.enabled) {
 
 #### Cookies.defaults
 An object representing default options to be used when setting and expiring cookie values.
-`Cookies.defaults` supports the following properties:
 
-*path*: A string value of the path of the cookie  
-*domain*: A string value of the domain of the cookie  
-*expires*: A number (of seconds), a date parsable string, or a `Date` object of when the cookie will expire  
-*secure*: A boolean value of whether or not the cookie should only be available over SSL
-
-By default, only `Cookies.defaults.path` is set to `'/'`, all other properties are `undefined`.
-If any property is left undefined, the browser's default value will be used instead.
+| Option    | Description                                                                                      | Default     |
+| --------: | ------------------------------------------------------------------------------------------------ | ----------- |
+|    *path* | A string value of the path of the cookie                                                         | `"/"`       |
+|  *domain* | A string value of the domain of the cookie                                                       | `undefined` |
+| *expires* | A number (of seconds), a date parsable string, or a `Date` object of when the cookie will expire | `undefined` |
+|  *secure* | A boolean value of whether or not the cookie should only be available over SSL                   | `false`     |
 
 **Example Usage**
 ```javascript
