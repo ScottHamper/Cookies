@@ -13,8 +13,8 @@
     };
 
     // Allows for setter injection in unit tests
-    Cookies._document = document;
-    Cookies._navigator = navigator;
+    Cookies._document = typeof document !== 'undefined' ? document : null;
+    Cookies._navigator = typeof navigator !== 'undefined' ? navigator : null;
 
     Cookies.defaults = {
         path: '/',
@@ -118,9 +118,12 @@
     };
 
     Cookies._areEnabled = function () {
-        var testKey = 'cookies.js';
-        var areEnabled = Cookies.set(testKey, 1).get(testKey) === '1';
-        Cookies.expire(testKey);
+        var areEnabled = false;
+        if (Cookies._document) {
+            var testKey = 'cookies.js';
+            areEnabled = Cookies.set(testKey, 1).get(testKey) === '1';
+            Cookies.expire(testKey);
+        }
         return areEnabled;
     };
 
