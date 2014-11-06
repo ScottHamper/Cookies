@@ -16,6 +16,10 @@
     Cookies._document = document;
     Cookies._navigator = navigator;
 
+    // Used to ensure cookie keys do not collide with
+    // built-in `Object` properties
+    Cookies._cacheKeyPrefix = 'cookey.'; // Hurr hurr, :)
+
     Cookies.defaults = {
         path: '/',
         secure: false
@@ -26,7 +30,7 @@
             Cookies._renewCache();
         }
 
-        return Cookies._cache[key];
+        return Cookies._cache[Cookies._cacheKeyPrefix + key];
     };
 
     Cookies.set = function (key, value, options) {
@@ -84,19 +88,19 @@
         return cookieString;
     };
 
-    Cookies._getCookieObjectFromString = function (documentCookie) {
-        var cookieObject = {};
+    Cookies._getCacheFromString = function (documentCookie) {
+        var cookieCache = {};
         var cookiesArray = documentCookie ? documentCookie.split('; ') : [];
 
         for (var i = 0; i < cookiesArray.length; i++) {
             var cookieKvp = Cookies._getKeyValuePairFromCookieString(cookiesArray[i]);
 
-            if (cookieObject[cookieKvp.key] === undefined) {
-                cookieObject[cookieKvp.key] = cookieKvp.value;
+            if (cookieCache[Cookies._cacheKeyPrefix + cookieKvp.key] === undefined) {
+                cookieCache[Cookies._cacheKeyPrefix + cookieKvp.key] = cookieKvp.value;
             }
         }
 
-        return cookieObject;
+        return cookieCache;
     };
 
     Cookies._getKeyValuePairFromCookieString = function (cookieString) {
@@ -113,7 +117,7 @@
     };
 
     Cookies._renewCache = function () {
-        Cookies._cache = Cookies._getCookieObjectFromString(Cookies._document.cookie);
+        Cookies._cache = Cookies._getCacheFromString(Cookies._document.cookie);
         Cookies._cachedDocumentCookie = Cookies._document.cookie;
     };
 

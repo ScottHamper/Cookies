@@ -96,11 +96,15 @@ describe('UNIT TESTS', function () {
             expect(Cookies._renewCache).not.toHaveBeenCalled();
         });
         
-        it('returns the value of `Cookies._cache[key]`', function () {
-            Cookies._cachedDocumentCookie = mockDocument.cookie; // Prevents cache from renewing
-            Cookies._cache = { key: 'value' };
+        it('returns the value of the cookie when it exists', function () {
+            expect(Cookies.get(key)).toEqual('value');
+        });
+        
+        it('returns the value of keys that are named the same as built-in `Object` properties', function () {
+            key = 'constructor';
+            mockDocument.cookie = 'constructor=value';
             
-            expect(Cookies.get(key)).toEqual(Cookies._cache[key]);
+            expect(Cookies.get(key)).toEqual('value');
         });
     });
 
@@ -409,25 +413,27 @@ describe('UNIT TESTS', function () {
             });
         });
         
-        describe('Cookies._getCookieObjectFromString(documentCookie)', function () {
+        describe('Cookies._getCacheFromString(documentCookie)', function () {
             it('returns an object of cookie key/value pairs', function () {
                 var documentCookie = 'key=value; scott=hamper';
-                expect(Cookies._getCookieObjectFromString(documentCookie)).toEqual({
-                    key: 'value',
-                    scott: 'hamper'
-                });
+                var expected = {};
+                expected[Cookies._cacheKeyPrefix + 'key'] = 'value';
+                expected[Cookies._cacheKeyPrefix + 'scott'] = 'hamper';
+                
+                expect(Cookies._getCacheFromString(documentCookie)).toEqual(expected);
             });
             
             it('returns an empty object if `documentCookie` is an empty string', function () {
                 var documentCookie = '';
-                expect(Cookies._getCookieObjectFromString(documentCookie)).toEqual({});
+                expect(Cookies._getCacheFromString(documentCookie)).toEqual({});
             });
             
             it('ignores duplicate cookie keys', function () {
                 var documentCookie = 'key=value; key=scott';
-                expect(Cookies._getCookieObjectFromString(documentCookie)).toEqual({
-                    key: 'value'
-                });
+                var expected = {};
+                expected[Cookies._cacheKeyPrefix + 'key'] = 'value';
+                
+                expect(Cookies._getCacheFromString(documentCookie)).toEqual(expected);
             });
         });
         
@@ -468,15 +474,15 @@ describe('UNIT TESTS', function () {
         });
 
         describe('Cookies._renewCache()', function () {
-            it('sets `Cookies._cache` to `Cookies._getCookieObjectFromString(document.cookie)`', function () {
+            it('sets `Cookies._cache` to `Cookies._getCacheFromString(document.cookie)`', function () {
                 mockDocument.cookie = 'key=value';
                 Cookies._cache = undefined;
                 
-                spyOn(Cookies, '_getCookieObjectFromString').andCallThrough();
+                spyOn(Cookies, '_getCacheFromString').andCallThrough();
                 Cookies._renewCache();
                 
-                expect(Cookies._getCookieObjectFromString).toHaveBeenCalledWith(mockDocument.cookie);
-                expect(Cookies._cache).toEqual(Cookies._getCookieObjectFromString(mockDocument.cookie));
+                expect(Cookies._getCacheFromString).toHaveBeenCalledWith(mockDocument.cookie);
+                expect(Cookies._cache).toEqual(Cookies._getCacheFromString(mockDocument.cookie));
             });
             
             it('sets `Cookies._cachedDocumentCookie` to `document.cookie`', function () {
