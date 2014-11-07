@@ -1,5 +1,8 @@
 # Change Log
 
+## 1.0.1
+- Fixed being unable to retrieve cookie values for keys that were named the same as a built-in `Object` property.
+
 ## 1.0.0
 - Put Cookies.js into the public domain.
 - Explicitly defaulted the `secure` option to `false`.
