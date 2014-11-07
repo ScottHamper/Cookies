@@ -143,7 +143,7 @@
     if (typeof define === 'function' && define.amd) {
         define(function () { return cookiesExport; });
     // CommonJS/Node.js support
-    } else if (typeof exports !== 'undefined') {
+    } else if (typeof exports === 'object') {
         // Support Node.js specific `module.exports` (which can be a function)
         if (typeof module === 'object' && typeof module.exports === 'object') {
             exports = module.exports = cookiesExport;
