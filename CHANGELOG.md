@@ -1,5 +1,9 @@
 # Change Log
 
+## 1.1.0
+- Added the ability to require Cookies.js in CommonJS/Node environments that do not natively have a `window`
+  object, by exporting a factory method that takes an instance of a `window`.
+
 ## 1.0.1
 - Fixed being unable to retrieve cookie values for keys that were named the same as a built-in `Object` property.
 

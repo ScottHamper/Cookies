@@ -1,6 +1,6 @@
 {
     "name"          : "cookies-js",
-    "version"       : "1.0.1",
+    "version"       : "1.1.0",
     "author"        : "Scott Hamper",
     "description"   : "Client-Side Cookie Manipulation API",
     "homepage"      : "http://github.com/ScottHamper/Cookies",
