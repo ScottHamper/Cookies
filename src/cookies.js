@@ -14,7 +14,6 @@
 
     // Allows for setter injection in unit tests
     Cookies._document = typeof document !== 'undefined' ? document : null;
-    Cookies._navigator = typeof navigator !== 'undefined' ? navigator : null;
 
     // Used to ensure cookie keys do not collide with
     // built-in `Object` properties

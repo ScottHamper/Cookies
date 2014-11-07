@@ -497,7 +497,6 @@ describe('UNIT TESTS', function () {
             
             beforeEach(function () {
                 key = 'cookies.js';
-                Cookies._navigator = {};
             });
             
             it('attempts to set and get a cookie with a key of `cookies.js`', function () {
@@ -543,7 +542,6 @@ describe('INTEGRATION TESTS', function () {
     
     beforeEach(function () {
         Cookies._document = window.document;
-        Cookies._navigator = window.navigator;
     });
     
     
