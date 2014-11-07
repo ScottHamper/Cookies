@@ -5,13 +5,15 @@ Cookies.js is a small client-side javascript library that makes managing cookies
 [Features](#features)  
 [Browser Compatibility](#browser-compatibility)  
 [Getting the Library](#getting-the-library)  
+[Use in CommonJS/Node Environments Without `window`](#use-in-commonjsnode-environments-without-window)  
 [A Note About Encoding](#a-note-about-encoding)  
 [API Reference](#api-reference)
 
 ## Features
-- [RFC6265](http://www.rfc-editor.org/rfc/rfc6265.txt) Compliant
+- [RFC6265](http://www.rfc-editor.org/rfc/rfc6265.txt) compliant
 - Cross browser
 - Lightweight
+- No dependencies
 - Public domain
 - Supports AMD / CommonJS loaders
 
@@ -33,6 +35,19 @@ The following browsers have passed all of the automated Cookies.js tests:
 
 #### Bower
 `bower install cookies-js`
+
+## Use in CommonJS/Node Environments Without `window`
+In environments where there is no native `window` object, Cookies.js will export a factory method
+that accepts a `window` instance. For example, using [jsdom](https://github.com/tmpvar/jsdom), you
+might do something like:
+
+```javascript
+var jsdom = require('jsdom');
+var window = jsdom.jsdom().parentWindow;
+var Cookies = require('cookies-js')(window);
+
+// Use Cookies as you normally would
+```
 
 ## A Note About Encoding
 [RFC6265](http://www.rfc-editor.org/rfc/rfc6265.txt) defines a strict set of allowed characters for
