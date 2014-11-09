@@ -23,6 +23,8 @@
         // Used to ensure cookie keys do not collide with
         // built-in `Object` properties
         Cookies._cacheKeyPrefix = 'cookey.'; // Hurr hurr, :)
+        
+        Cookies._maxExpireDate = new Date('9999-12-31T23:59:59.999Z');
 
         Cookies.defaults = {
             path: '/',
@@ -65,9 +67,12 @@
 
         Cookies._getExpiresDate = function (expires, now) {
             now = now || new Date();
-            switch (typeof expires) {
-                case 'number': expires = new Date(now.getTime() + expires * 1000); break;
-                case 'string': expires = new Date(expires); break;
+
+            if (typeof expires === 'number') {
+                expires = expires === Infinity ?
+                    Cookies._maxExpireDate : new Date(now.getTime() + expires * 1000);
+            } else if (typeof expires === 'string') {
+                expires = new Date(expires);
             }
 
             if (expires && !Cookies._isValidDate(expires)) {

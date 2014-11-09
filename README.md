@@ -108,6 +108,7 @@ Cookies.set('key', 'value', { domain: 'www.example.com', secure: true });
 Cookies.set('key', 'value', { expires: 600 }); // Expires in 10 minutes
 Cookies.set('key', 'value', { expires: '01/01/2012' });
 Cookies.set('key', 'value', { expires: new Date(2012, 0, 1) });
+Cookies.set('key', 'value', { expires: Infinity });
 
 // Using the alias
 Cookies('key', 'value', { secure: true });

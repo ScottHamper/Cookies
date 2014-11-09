@@ -317,10 +317,15 @@ describe('UNIT TESTS', function () {
         });
         
         describe('Cookies._getExpiresDate(expires)', function () {
-            it('returns a Date object set to the current time plus <expires> seconds, when `expires` is a number', function () {
+            it('returns a Date object set to the current time plus <expires> seconds, when `expires` is a finite number', function () {
                 var now = new Date('01/01/2013 00:00:00');
                 var expires = 5;
                 expect(Cookies._getExpiresDate(expires, now)).toEqual(new Date('01/01/2013 00:00:05'));
+            });
+            
+            it('returns `Cookies._maxExpireDate` when `expires` is `Infinity`', function () {
+                var expires = Infinity;
+                expect(Cookies._getExpiresDate(expires)).toEqual(Cookies._maxExpireDate);
             });
             
             it('returns a Date object when `expires` is a valid Date parsable string', function () {
