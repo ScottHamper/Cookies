@@ -24,7 +24,7 @@
         // built-in `Object` properties
         Cookies._cacheKeyPrefix = 'cookey.'; // Hurr hurr, :)
         
-        Cookies._maxExpireDate = new Date('9999-12-31T23:59:59.999Z');
+        Cookies._maxExpireDate = new Date('Fri, 31 Dec 9999 23:59:59 UTC');
 
         Cookies.defaults = {
             path: '/',
