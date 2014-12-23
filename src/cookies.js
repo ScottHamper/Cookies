@@ -28,7 +28,8 @@
 
         Cookies.defaults = {
             path: '/',
-            secure: false
+            secure: false,
+            httponly: false
         };
 
         Cookies.get = function (key) {
@@ -57,7 +58,8 @@
                 path: options && options.path || Cookies.defaults.path,
                 domain: options && options.domain || Cookies.defaults.domain,
                 expires: options && options.expires || Cookies.defaults.expires,
-                secure: options && options.secure !== undefined ?  options.secure : Cookies.defaults.secure
+                secure: options && options.secure !== undefined ?  options.secure : Cookies.defaults.secure,
+                httponly: options && options.httponly !== undefined ? options.httponly : Cookies.defaults.httponly
             };
         };
 
@@ -93,6 +95,7 @@
             cookieString += options.domain ? ';domain=' + options.domain : '';
             cookieString += options.expires ? ';expires=' + options.expires.toUTCString() : '';
             cookieString += options.secure ? ';secure' : '';
+            cookieString += options.httponly ? ';httponly' : '';
 
             return cookieString;
         };
