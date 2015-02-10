@@ -1,5 +1,8 @@
 # Change Log
 
+## 1.2.0
+- `Infinity` may now be used with the "expires" option to set a persistent cookie.
+
 ## 1.1.0
 - Added the ability to require Cookies.js in CommonJS/Node environments that do not natively have a `window`
   object, by exporting a factory method that takes an instance of a `window`.
