@@ -3,7 +3,8 @@
     "version"   : "1.1.0",
     "main"      : "src/cookies.js",
     "ignore"    : [
-        "tests",
-        "package.json"
+        "**/*",
+        "!dist/*",
+        "!bower.json"
     ]
 }
