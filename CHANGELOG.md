@@ -1,5 +1,8 @@
 # Change Log
 
+## 1.2.1
+- Fixed bower.json and package.json `main` pointing to "src" instead of "dist" now that an unminified version lives in "dist"
+
 ## 1.2.0
 - `Infinity` may now be used with the "expires" option to set a persistent cookie.
 - Included unminified version of the library in "dist"
