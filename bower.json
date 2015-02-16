@@ -1,7 +1,7 @@
 {
     "name"      : "cookies-js",
     "version"   : "1.2.0",
-    "main"      : "src/cookies.js",
+    "main"      : "dist/cookies.js",
     "ignore"    : [
         "**/*",
         "!dist/*",
