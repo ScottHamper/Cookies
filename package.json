@@ -8,7 +8,7 @@
     "keywords"      : ["cookies", "client", "browser"],
     "repository"    : {
         "type": "git",
-        "url": "git://github.com/dzincolorado/Cookies.git"
+        "url": "git://github.com/ScottHamper/Cookies.git"
     },
     "main"          : "./dist/cookies.js",
     "files"         : ["dist/*", "README.md", "UNLICENSE"]
