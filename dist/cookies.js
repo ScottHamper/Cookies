@@ -83,6 +83,7 @@
         };
 
         Cookies._generateCookieString = function (key, value, options) {
+            if(!key) return "";
             key = key.replace(/[^#$&+\^`|]/g, encodeURIComponent);
             key = key.replace(/\(/g, '%28').replace(/\)/g, '%29');
             value = (value + '').replace(/[^!#$&-+\--:<-\[\]-~]/g, encodeURIComponent);
