@@ -107,6 +107,12 @@ describe('UNIT TESTS', function () {
             expect(Cookies.get(key)).toEqual('value');
         });
         
+        it('URI decodes cookie values', function () {
+            mockDocument.cookie = 'key=%5C%22%2C%3B%20%C3%B1%C3%A2%C3%A9';
+
+            expect(Cookies.get('key')).toEqual('\\",; ñâé');
+        });
+        
         it('returns the value of a properly encoded cookie when another cookie with a malformed value exists', function () {
             mockDocument.cookie = 'key=value; malformed=%D0%EE%F1%F1%E8%FF';
             
