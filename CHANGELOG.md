@@ -1,5 +1,8 @@
 # Change Log
 
+## 1.2.2
+- Fixed errors caused when accessing a properly encoded cookie while another cookie had a malformed key/value.
+
 ## 1.2.1
 - Fixed bower.json and package.json `main` pointing to "src" instead of "dist" now that an unminified version lives in "dist"
 
