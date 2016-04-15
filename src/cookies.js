@@ -55,11 +55,12 @@
         };
 
         Cookies._getExtendedOptions = function (options) {
+            options || (options = {});
             return {
-                path: options && options.path || Cookies.defaults.path,
-                domain: options && options.domain || Cookies.defaults.domain,
-                expires: options && options.expires || Cookies.defaults.expires,
-                secure: options && options.secure !== undefined ?  options.secure : Cookies.defaults.secure
+                path: options.path || Cookies.defaults.path,
+                domain: options.domain || Cookies.defaults.domain,
+                expires: options.expires || Cookies.defaults.expires,
+                secure: options.secure !== undefined ?  options.secure : Cookies.defaults.secure
             };
         };
 
@@ -67,8 +68,8 @@
             return Object.prototype.toString.call(date) === '[object Date]' && !isNaN(date.getTime());
         };
 
-        Cookies._getExpiresDate = function (expires, now) {
-            now = now || new Date();
+        Cookies._getExpiresDate = function (expires) {
+            var now = new Date();
 
             if (typeof expires === 'number') {
                 expires = expires === Infinity ?
