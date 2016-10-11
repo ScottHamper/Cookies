@@ -153,8 +153,7 @@
 
         return Cookies;
     };
-
-    var cookiesExport = typeof global.document === 'object' ? factory(global) : factory;
+    var cookiesExport = (global && typeof global.document === 'object') ? factory(global) : factory;
 
     // AMD support
     if (typeof define === 'function' && define.amd) {
