@@ -35,11 +35,40 @@
             if (Cookies._cachedDocumentCookie !== Cookies._document.cookie) {
                 Cookies._renewCache();
             }
-            
-            var value = Cookies._cache[Cookies._cacheKeyPrefix + key];
+            var value = undefined;
+            if (arguments.length > 0) {
+              value = Cookies._cache[Cookies._cacheKeyPrefix + key];
+            } else {
+              value = Cookies._getAllCookies();
+            }
 
             return value === undefined ? undefined : decodeURIComponent(value);
         };
+
+        Cookies._getAllCookies = function() {
+          var cookies = document.cookie ? document.cookie.split('; ') : [];
+          var rdecode = /(%[0-9A-Z]{2})+/g;
+          var result = [];
+
+          for (var i = 0; i < cookies.length; i++) {
+            var parts = cookies[i].split('=');
+            var cookie = parts.slice(1).join('=');
+
+            if (cookie.charAt(0) === '"') {
+              cookie = cookie.slice(1, -1);
+            }
+
+            try {
+              var name = parts[0].replace(rdecode, decodeURIComponent);
+              cookie = cookie.replace(rdecode, decodeURIComponent);
+              result[name] = cookie;
+            } catch (e) {
+              console.log(e);
+            }
+          }
+
+          return result;
+        }
 
         Cookies.set = function (key, value, options) {
             options = Cookies._getExtendedOptions(options);
