@@ -23,7 +23,7 @@
         // Used to ensure cookie keys do not collide with
         // built-in `Object` properties
         Cookies._cacheKeyPrefix = 'cookey.'; // Hurr hurr, :)
-        
+
         Cookies._maxExpireDate = new Date('Fri, 31 Dec 9999 23:59:59 UTC');
 
         Cookies.defaults = {
@@ -35,20 +35,16 @@
             if (Cookies._cachedDocumentCookie !== Cookies._document.cookie) {
                 Cookies._renewCache();
             }
-            var value = undefined;
-            if (arguments.length > 0) {
-              value = Cookies._cache[Cookies._cacheKeyPrefix + key];
-            } else {
-              value = Cookies._getAllCookies();
-            }
+
+            var value = Cookies._cache[Cookies._cacheKeyPrefix + key];
 
             return value === undefined ? undefined : decodeURIComponent(value);
         };
 
-        Cookies._getAllCookies = function() {
+        Cookies.getAll = function() {
           var cookies = document.cookie ? document.cookie.split('; ') : [];
           var rdecode = /(%[0-9A-Z]{2})+/g;
-          var result = [];
+          var listCookies = [];
 
           for (var i = 0; i < cookies.length; i++) {
             var parts = cookies[i].split('=');
@@ -61,13 +57,13 @@
             try {
               var name = parts[0].replace(rdecode, decodeURIComponent);
               cookie = cookie.replace(rdecode, decodeURIComponent);
-              result[name] = cookie;
+              listCookies[name] = cookie;
             } catch (e) {
-              console.log(e);
+              console.error(e);
             }
           }
 
-          return result;
+          return listCookies;
         }
 
         Cookies.set = function (key, value, options) {
@@ -159,7 +155,7 @@
                     console.error('Could not decode cookie with key "' + key + '"', e);
                 }
             }
-            
+
             return {
                 key: decodedKey,
                 value: cookieString.substr(separatorIndex + 1) // Defer decoding value until accessed
