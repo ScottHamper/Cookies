@@ -42,7 +42,7 @@
         };
 
         Cookies.getAll = function() {
-          var cookies = document.cookie ? document.cookie.split('; ') : [];
+          var cookies = Cookies._document.cookie ? Cookies._document.cookie.split('; ') : [];
           var rdecode = /(%[0-9A-Z]{2})+/g;
           var listCookies = [];
 
