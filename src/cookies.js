@@ -1,5 +1,5 @@
 /*
- * Cookies.js - 1.2.2
+ * Cookies.js - 1.2.3-pre
  * https://github.com/ScottHamper/Cookies
  *
  * This is free and unencumbered software released into the public domain.
