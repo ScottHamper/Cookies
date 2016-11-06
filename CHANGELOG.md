@@ -1,5 +1,8 @@
 # Change Log
 
+## 1.2.3
+- Fixed null object reference error when both the global `this` and `window` objects are undefined (e.g., when using webpack).
+
 ## 1.2.2
 - Fixed errors caused when accessing a properly encoded cookie while another cookie had a malformed key/value.
 
