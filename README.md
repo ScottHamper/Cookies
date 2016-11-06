@@ -27,8 +27,8 @@ The following browsers have passed all of the automated Cookies.js tests:
 
 ## Getting the Library
 #### Direct downloads
-- [v1.2.2 Minified](https://raw.github.com/ScottHamper/Cookies/1.2.2/dist/cookies.min.js) (~1 KB gzipped)
-- [v1.2.2 Unminified](https://raw.github.com/ScottHamper/Cookies/1.2.2/dist/cookies.js) (~1.7 KB gzipped)
+- [v1.2.3 Minified](https://raw.github.com/ScottHamper/Cookies/1.2.3/dist/cookies.min.js) (~1.2 KB gzipped)
+- [v1.2.3 Unminified](https://raw.github.com/ScottHamper/Cookies/1.2.3/dist/cookies.js) (~1.9 KB gzipped)
 
 #### Node Package Manager
 `npm install cookies-js`
