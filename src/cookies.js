@@ -64,7 +64,7 @@
         };
 
         Cookies._isValidDate = function (date) {
-            return Object.prototype.toString.call(date) === '[object Date]' && !isNaN(date.getTime());
+            return date instanceof Date;
         };
 
         Cookies._getExpiresDate = function (expires, now) {
