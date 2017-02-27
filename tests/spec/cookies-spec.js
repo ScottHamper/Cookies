@@ -58,6 +58,10 @@ describe('UNIT TESTS', function () {
         it('has a defined `secure` value of `false`', function () {
             expect(Cookies.defaults.secure).toBe(false);
         });
+
+        it('has an undefined `sameSite` value', function () {
+            expect(Cookies.defaults.sameSite).toBeUndefined();
+        });
     });
 
     describe('Cookies.get(key)', function () {
@@ -434,6 +438,39 @@ describe('UNIT TESTS', function () {
                 var options = { secure: true };
                 expect(Cookies._generateCookieString(key, value, options)).toEqual('key=value;secure');
             });
+
+            it('does not include "same site" flag if `options.sameSite` is not defined', function () {
+                var options = { sameSite: undefined };
+                expect(Cookies._generateCookieString(key, value, options)).toEqual('key=value'); 
+            });
+
+            it('includes "same site" flag with value "Lax" if `options.sameSite` is "Lax"', function () {
+                var options = { sameSite: 'Lax' };
+                expect(Cookies._generateCookieString(key, value, options)).toEqual('key=value;sameSite=Lax'); 
+            });
+
+            it('includes "same site" flag with value "Lax" if `options.sameSite` is "lax"', function () {
+                var options = { sameSite: 'lax' };
+                expect(Cookies._generateCookieString(key, value, options)).toEqual('key=value;sameSite=Lax'); 
+            });
+
+            it('includes "same site" flag with value "Strict" if `options.sameSite` is "Strict"', function () {
+                var options = { sameSite: 'Strict' };
+                expect(Cookies._generateCookieString(key, value, options)).toEqual('key=value;sameSite=Strict'); 
+            });
+
+            it('includes "same site" flag with value "Strict" if `options.sameSite` is "strict"', function () {
+                var options = { sameSite: 'strict' };
+                expect(Cookies._generateCookieString(key, value, options)).toEqual('key=value;sameSite=Strict'); 
+            });
+
+            it(
+                'throws Error when `options.sameSite` is not undefined, "lax", "Lax", "strict", or "Strict"',
+                function () {
+                    var options = { sameSite: true };
+                    expect(function () { Cookies._generateCookieString(key, value, options); }).toThrow();
+                }
+            );
         });
         
         describe('Cookies._getCacheFromString(documentCookie)', function () {

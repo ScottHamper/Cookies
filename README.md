@@ -90,6 +90,8 @@ Sets a cookie in the document. If the cookie does not already exist, it will be 
 |  *domain* | A string value of the domain of the cookie                                                       | `undefined` |
 | *expires* | A number (of seconds), a date parsable string, or a `Date` object of when the cookie will expire | `undefined` |
 |  *secure* | A boolean value of whether or not the cookie should only be available over SSL                   | `false`     |
+|  *sameSite* | <p>Use "SameSite" cookie attribute?</p><p>Value is one of: </p><ul><li>`undefined`: don't use "SameSite".</li><li>`"strict"`: use "SameSite" with value `"Strict"`.</li><li>`"Strict"`: use "SameSite" with value `"Strict"`.</li><li>`"lax"`: use "SameSite" with value `"Lax"`.</li><li>`"Lax"`: use "SameSite" with value `"Lax"`.</li> | `undefined` |
+
 
 A default value for any option may be set in the `Cookies.defaults` object.
 
@@ -109,6 +111,14 @@ Cookies.set('key', 'value', { expires: 600 }); // Expires in 10 minutes
 Cookies.set('key', 'value', { expires: '01/01/2012' });
 Cookies.set('key', 'value', { expires: new Date(2012, 0, 1) });
 Cookies.set('key', 'value', { expires: Infinity });
+
+// Setting cookies with "SameSite" attribute
+Cookies.set('key', 'value'); // Don't use "SameSite"
+Cookies.set('key', 'value', { sameSite: undefined }); // Don't use "SameSite"
+Cookies.set('key', 'value', { sameSite: 'strict' }); // Use "SameSite" with value "Strict"
+Cookies.set('key', 'value', { sameSite: 'Strict' }); // Use "SameSite" with value "Strict"
+Cookies.set('key', 'value', { sameSite: 'lax' }); // Use "SameSite" with value "Lax"
+Cookies.set('key', 'value', { sameSite: 'Lax' }); // Use "SameSite" with value "Lax"
 
 // Using the alias
 Cookies('key', 'value', { secure: true });
@@ -177,6 +187,7 @@ An object representing default options to be used when setting and expiring cook
 |  *domain* | A string value of the domain of the cookie                                                       | `undefined` |
 | *expires* | A number (of seconds), a date parsable string, or a `Date` object of when the cookie will expire | `undefined` |
 |  *secure* | A boolean value of whether or not the cookie should only be available over SSL                   | `false`     |
+|  *sameSite* | <p>Use "SameSite" cookie attribute?</p><p>Value is one of: </p><ul><li>`undefined`: don't use "SameSite".</li><li>`"strict"`: use "SameSite" with value `"Strict"`.</li><li>`"Strict"`: use "SameSite" with value `"Strict"`.</li><li>`"lax"`: use "SameSite" with value `"Lax"`.</li><li>`"Lax"`: use "SameSite" with value `"Lax"`.</li> | `undefined` |
 
 **Example Usage**
 ```javascript
