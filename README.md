@@ -90,6 +90,7 @@ Sets a cookie in the document. If the cookie does not already exist, it will be 
 |  *domain* | A string value of the domain of the cookie                                                       | `undefined` |
 | *expires* | A number (of seconds), a date parsable string, or a `Date` object of when the cookie will expire | `undefined` |
 |  *secure* | A boolean value of whether or not the cookie should only be available over SSL                   | `false`     |
+|*httponly* | A boolean value of whether or not the cookie should only be via HTTP headers                     | `false`     |
 
 A default value for any option may be set in the `Cookies.defaults` object.
 
@@ -177,12 +178,14 @@ An object representing default options to be used when setting and expiring cook
 |  *domain* | A string value of the domain of the cookie                                                       | `undefined` |
 | *expires* | A number (of seconds), a date parsable string, or a `Date` object of when the cookie will expire | `undefined` |
 |  *secure* | A boolean value of whether or not the cookie should only be available over SSL                   | `false`     |
+|*httponly* | A boolean value of whether or not the cookie should only be available via HTTP headers           | `false`     |
 
 **Example Usage**
 ```javascript
 Cookies.defaults = {
     path: '/',
-    secure: true
+    secure: true,
+    httponly: true,
 };
 
 Cookies.set('key', 'value'); // Will be secure and have a path of '/'
