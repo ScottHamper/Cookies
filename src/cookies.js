@@ -31,14 +31,14 @@
             secure: false
         };
 
-        Cookies.get = function (key) {
+        Cookies.get = function (key, def = undefined) {
             if (Cookies._cachedDocumentCookie !== Cookies._document.cookie) {
                 Cookies._renewCache();
             }
             
             var value = Cookies._cache[Cookies._cacheKeyPrefix + key];
 
-            return value === undefined ? undefined : decodeURIComponent(value);
+            return value === def ? undefined : decodeURIComponent(value);
         };
 
         Cookies.set = function (key, value, options) {
