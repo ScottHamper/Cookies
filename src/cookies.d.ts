@@ -28,6 +28,5 @@ declare module "cookies" {
     export = Cookies;
 }
 
-declare module "cookies-js" {
-    export = Cookies;
-}
+
+export = Cookies;
