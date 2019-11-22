@@ -24,10 +24,6 @@ interface CookiesStatic {
 
 declare var Cookies:CookiesStatic;
 
-declare module "cookies" {
-    export = Cookies;
-}
-
 declare module "cookies-js" {
     export = Cookies;
 }
