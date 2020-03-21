@@ -58,6 +58,10 @@ describe('UNIT TESTS', function () {
         it('has a defined `secure` value of `false`', function () {
             expect(Cookies.defaults.secure).toBe(false);
         });
+
+        it('has a defined `sameSite` value of `null`', function () {
+          expect(Cookies.defaults.sameSite).toBe(null);
+        });
     });
 
     describe('Cookies.get(key)', function () {
@@ -139,7 +143,8 @@ describe('UNIT TESTS', function () {
                 path: '/cookies',
                 domain: 'www.scotthamper.com',
                 expires: '01/01/2013 GMT',
-                secure: false
+                secure: false,
+                sameSite: null
             };
         });
         
@@ -186,7 +191,8 @@ describe('UNIT TESTS', function () {
                 path: Cookies.defaults.path,
                 domain: Cookies.defaults.domain,
                 expires: new Date(Cookies.defaults.expires),
-                secure: Cookies.defaults.secure
+                secure: Cookies.defaults.secure,
+                sameSite: Cookies.defaults.sameSite
             };
             
             spyOn(Cookies, '_generateCookieString').andCallThrough();
@@ -230,7 +236,8 @@ describe('UNIT TESTS', function () {
                     path: '/cookies',
                     domain: 'www.scotthamper.com',
                     expires: '01/01/2013',
-                    secure: false
+                    secure: false,
+                    sameSite: null
                 };
             });
             
@@ -247,7 +254,8 @@ describe('UNIT TESTS', function () {
                     path: '/nom',
                     domain: 'www.github.com',
                     expires: '02/02/2013',
-                    secure: true
+                    secure: true,
+                    sameSite: 'None'
                 };
                 
                 expect(Cookies._getExtendedOptions(options)).toEqual(options);
@@ -260,7 +268,8 @@ describe('UNIT TESTS', function () {
                     path: options.path,
                     domain: Cookies.defaults.domain,
                     expires: Cookies.defaults.expires,
-                    secure: Cookies.defaults.secure
+                    secure: Cookies.defaults.secure,
+                    sameSite: Cookies.defaults.sameSite
                 });
             });
             
@@ -271,7 +280,8 @@ describe('UNIT TESTS', function () {
                     path: Cookies.defaults.path,
                     domain: options.domain,
                     expires: Cookies.defaults.expires,
-                    secure: Cookies.defaults.secure
+                    secure: Cookies.defaults.secure,
+                    sameSite: Cookies.defaults.sameSite
                 });
             });
             
@@ -282,7 +292,8 @@ describe('UNIT TESTS', function () {
                     path: Cookies.defaults.path,
                     domain: Cookies.defaults.domain,
                     expires: options.expires,
-                    secure: Cookies.defaults.secure
+                    secure: Cookies.defaults.secure,
+                    sameSite: Cookies.defaults.sameSite
                 });
             });
             
@@ -293,7 +304,8 @@ describe('UNIT TESTS', function () {
                     path: Cookies.defaults.path,
                     domain: Cookies.defaults.domain,
                     expires: Cookies.defaults.expires,
-                    secure: options.secure
+                    secure: options.secure,
+                    sameSite: Cookies.defaults.sameSite
                 });
             });
             
@@ -311,6 +323,7 @@ describe('UNIT TESTS', function () {
                 expect(options.domain).toBeUndefined();
                 expect(options.expires).toBeUndefined();
                 expect(options.secure).toBeUndefined();
+                expect(options.sameSite).toBeUndefined();
             });
         });
         
@@ -433,6 +446,13 @@ describe('UNIT TESTS', function () {
             it('includes the secure flag when `options.secure` is true', function () {
                 var options = { secure: true };
                 expect(Cookies._generateCookieString(key, value, options)).toEqual('key=value;secure');
+            });
+
+            it('includes the SameSite flag when `options.sameSite` is defined', function () {
+              var options = { sameSite: 'None' };
+              var expected = 'key=value;SameSite=None';
+      
+              expect(Cookies._generateCookieString(key, value, options)).toEqual(expected);
             });
         });
         
