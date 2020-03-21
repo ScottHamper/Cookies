@@ -90,7 +90,7 @@ Sets a cookie in the document. If the cookie does not already exist, it will be 
 |  *domain*  | A string value of the domain of the cookie                                                                         | `undefined` |
 | *expires*  | A number (of seconds), a date parsable string, or a `Date` object of when the cookie will expire                   | `undefined` |
 |  *secure*  | A boolean value of whether or not the cookie should only be available over SSL                                     | `false`     |
-| *SameSite* | A string value that allows you to declare if you cookies should be restruited to first party or same site context  | `null`      |
+| *SameSite* | A string value that allows you to declare if the cookies should be restrcited to first party or same site context  | `null`      |
 
 A default value for any option may be set in the `Cookies.defaults` object.
 
@@ -178,7 +178,7 @@ An object representing default options to be used when setting and expiring cook
 |  *domain*  | A string value of the domain of the cookie                                                                        | `undefined` |
 | *expires*  | A number (of seconds), a date parsable string, or a `Date` object of when the cookie will expire                  | `undefined` |
 |  *secure*  | A boolean value of whether or not the cookie should only be available over SSL                                    | `false`     |
-| *SameSite* | A string value that allows you to declare if you cookies should be restruited to first party or same site context | `null`      |
+| *SameSite* | A string value that allows you to declare if the cookies should be restrcited to first party or same site context | `null`      |
 
 **Example Usage**
 ```javascript
