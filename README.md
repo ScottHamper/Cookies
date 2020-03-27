@@ -84,12 +84,13 @@ and [System.Uri.UnescapeDataString](http://msdn.microsoft.com/en-us/library/syst
 
 Sets a cookie in the document. If the cookie does not already exist, it will be created. Returns the `Cookies` object.
 
-| Option    | Description                                                                                      | Default     |
-| --------: | ------------------------------------------------------------------------------------------------ | ----------- |
-|    *path* | A string value of the path of the cookie                                                         | `"/"`       |
-|  *domain* | A string value of the domain of the cookie                                                       | `undefined` |
-| *expires* | A number (of seconds), a date parsable string, or a `Date` object of when the cookie will expire | `undefined` |
-|  *secure* | A boolean value of whether or not the cookie should only be available over SSL                   | `false`     |
+| Option     | Description                                                                                                        | Default     |
+| ---------: | -------------------------------------------------------------------------------------------------------------------| ----------- |
+|    *path*  | A string value of the path of the cookie                                                                           | `"/"`       |
+|  *domain*  | A string value of the domain of the cookie                                                                         | `undefined` |
+| *expires*  | A number (of seconds), a date parsable string, or a `Date` object of when the cookie will expire                   | `undefined` |
+|  *secure*  | A boolean value of whether or not the cookie should only be available over SSL                                     | `false`     |
+| *SameSite* | A string value that allows you to declare if the cookies should be restrcited to first party or same site context  | `null`      |
 
 A default value for any option may be set in the `Cookies.defaults` object.
 
@@ -171,12 +172,13 @@ if (Cookies.enabled) {
 #### Cookies.defaults
 An object representing default options to be used when setting and expiring cookie values.
 
-| Option    | Description                                                                                      | Default     |
-| --------: | ------------------------------------------------------------------------------------------------ | ----------- |
-|    *path* | A string value of the path of the cookie                                                         | `"/"`       |
-|  *domain* | A string value of the domain of the cookie                                                       | `undefined` |
-| *expires* | A number (of seconds), a date parsable string, or a `Date` object of when the cookie will expire | `undefined` |
-|  *secure* | A boolean value of whether or not the cookie should only be available over SSL                   | `false`     |
+| Option     | Description                                                                                                       | Default     |
+| ---------: | ------------------------------------------------------------------------------------------------------------------| ----------- |
+|    *path*  | A string value of the path of the cookie                                                                          | `"/"`       |
+|  *domain*  | A string value of the domain of the cookie                                                                        | `undefined` |
+| *expires*  | A number (of seconds), a date parsable string, or a `Date` object of when the cookie will expire                  | `undefined` |
+|  *secure*  | A boolean value of whether or not the cookie should only be available over SSL                                    | `false`     |
+| *SameSite* | A string value that allows you to declare if the cookies should be restrcited to first party or same site context | `null`      |
 
 **Example Usage**
 ```javascript
