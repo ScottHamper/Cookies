@@ -173,7 +173,7 @@ jasmine.isA_ = function(typeName, value) {
 };
 
 /**
- * Pretty printer for expecations.  Takes any object and turns it into a human-readable string.
+ * Pretty printer for exceptions.  Takes any object and turns it into a human-readable string.
  *
  * @param value {Object} an object to be outputted
  * @returns {String}
@@ -195,7 +195,7 @@ jasmine.isDomNode = function(obj) {
 };
 
 /**
- * Returns a matchable 'generic' object of the class type.  For use in expecations of type when values don't matter.
+ * Returns a matchable 'generic' object of the class type.  For use in exceptions of type when values don't matter.
  *
  * @example
  * // don't care about which function is passed in, as long as it's a function
